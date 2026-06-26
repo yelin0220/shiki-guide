@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#ffffff">
+  <title>Shiki — Guest Guide</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:        #1a2c5b;
+      --navy-hover:  #253f82;
+      --bg:          #ffffff;
+      --card:        #f7f4ef;
+      --card-hover:  #eee9e0;
+      --border:      #e8e2d8;
+      --text:        #1a2c5b;
+      --muted:       #8a8fa8;
+      --safe-top:    env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+                   'Helvetica Neue', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN',
+                   'Noto Sans KR', 'Noto Sans JP', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      overflow: hidden;
+    }
+
+    #app {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── Screens ─────────────────────────────────────────── */
+    .screen {
+      position: absolute;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.38s cubic-bezier(0.32, 0, 0.15, 1);
+      will-change: transform;
+    }
+    .screen.active { transform: translateX(0); }
+    .screen.exit-left { transform: translateX(-28%); }
+
+    #landing {
+      transform: translateX(0);
+    }
+
+    /* ── Language pills ──────────────────────────────────── */
+    .lang-bar {
+      position: absolute;
+      top: calc(var(--safe-top) + 18px);
+      right: 20px;
+      display: flex;
+      gap: 6px;
+      z-index: 20;
+    }
+    .lang-btn {
+      padding: 5px 13px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lang-btn.on {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #fff;
+    }
+
+    /* ── Landing ─────────────────────────────────────────── */
+    .landing-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 36px;
+      padding-top: calc(var(--safe-top) + 64px);
+      text-align: center;
+      gap: 0;
+    }
+    .logo-wrap {
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.2s forwards;
+    }
+    .logo-wrap img {
+      width: 90px;
+      height: auto;
+    }
+    .welcome-block {
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s forwards;
+    }
+    .welcome-title {
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--navy);
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+    .welcome-sub {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── CTA ─────────────────────────────────────────────── */
+    .cta-wrap {
+      padding: 0 28px;
+      padding-bottom: calc(var(--safe-bottom) + 44px);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.6s forwards;
+    }
+    .btn-fill {
+      width: 100%;
+      padding: 17px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-fill:active { transform: scale(0.97); background: var(--navy-hover); }
+
+    .btn-outline {
+      width: 100%;
+      padding: 17px;
+      background: transparent;
+      color: var(--navy);
+      border: 1.5px solid var(--navy);
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-outline:active { transform: scale(0.97); background: rgba(26,44,91,0.06); }
+
+    /* ── Nav bar (inner screens) ─────────────────────────── */
+    .nav-bar {
+      padding: calc(var(--safe-top) + 14px) 20px 14px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      color: var(--navy);
+      background: none;
+      border: none;
+      font-size: 15px;
+      font-weight: 400;
+      cursor: pointer;
+      padding: 4px 0;
+      min-width: 60px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .back-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .nav-title {
+      flex: 1;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: 0.03em;
+      margin-right: 60px; /* balance back-btn */
+    }
+
+    /* ── Scroll area ─────────────────────────────────────── */
+    .scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    /* ── Room selection ──────────────────────────────────── */
+    .room-section-label {
+      padding: 24px 20px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .room-list {
+      padding: 0 16px;
+      padding-bottom: calc(var(--safe-bottom) + 24px);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .room-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .room-card:active { transform: scale(0.98); background: var(--card-hover); }
+    .room-info { flex: 1; }
+    .room-name {
+      font-size: 19px;
+      font-weight: 500;
+      color: var(--navy);
+      letter-spacing: 0.03em;
+    }
+    .room-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .chevron {
+      color: var(--muted);
+      margin-left: 12px;
+      flex-shrink: 0;
+    }
+
+    /* ── Guide header ────────────────────────────────────── */
+    .guide-header {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .guide-room-name {
+      font-size: 22px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: var(--navy);
+    }
+    .guide-room-type {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    /* ── Guide cards ─────────────────────────────────────── */
+    .guide-list {
+      padding: 16px 16px;
+      padding-bottom: calc(var(--safe-bottom) + 24px);
+    }
+    .guide-section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 4px 10px;
+    }
+    .guide-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: var(--card);
+      border-radius: 14px;
+      margin-bottom: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .guide-card:active { transform: scale(0.98); background: var(--card-hover); }
+    .guide-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      flex-shrink: 0;
+    }
+    .guide-text { flex: 1; }
+    .guide-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--navy);
+    }
+    .guide-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* ── Animations ──────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Chevron SVG shorthand ───────────────────────────── */
+    .chev-right {
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ① LANDING ─────────────────────────────────────── -->
+  <div id="s-landing" class="screen active">
+    <div class="lang-bar">
+      <button class="lang-btn on" onclick="setLang('ko')">한</button>
+      <button class="lang-btn"   onclick="setLang('en')">EN</button>
+      <button class="lang-btn"   onclick="setLang('ja')">日</button>
+    </div>
+
+    <div class="landing-body">
+      <div class="logo-wrap">
+        <img src="../logo/Logo_2.png" alt="Shiki">
+      </div>
+      <div class="welcome-block">
+        <div class="welcome-title" id="lbl-welcome-title">어서오세요</div>
+        <div class="welcome-sub"   id="lbl-welcome-sub"></div>
+      </div>
+    </div>
+
+    <div class="cta-wrap">
+      <button class="btn-fill"    id="btn-guide"   onclick="push('s-rooms')"></button>
+      <button class="btn-outline" id="btn-checkin" onclick="openCheckin()"></button>
+    </div>
+  </div>
+
+  <!-- ② ROOM SELECTION ──────────────────────────────── -->
+  <div id="s-rooms" class="screen">
+    <div class="nav-bar">
+      <button class="back-btn" onclick="pop()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        <span id="lbl-back-rooms"></span>
+      </button>
+      <div class="nav-title" id="lbl-nav-rooms"></div>
+    </div>
+
+    <div class="scroll-area">
+      <div class="room-section-label" id="lbl-room-section"></div>
+      <div class="room-list">
+
+        <div class="room-card" onclick="selectRoom('reflections')">
+          <div class="room-info">
+            <div class="room-name">Reflections</div>
+            <div class="room-sub" id="sub-reflections"></div>
+          </div>
+          <div class="chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="room-card" onclick="selectRoom('rising_sun')">
+          <div class="room-info">
+            <div class="room-name">Rising Sun</div>
+            <div class="room-sub" id="sub-rising_sun"></div>
+          </div>
+          <div class="chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="room-card" onclick="selectRoom('daydream')">
+          <div class="room-info">
+            <div class="room-name">Daydream</div>
+            <div class="room-sub" id="sub-daydream"></div>
+          </div>
+          <div class="chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="room-card" onclick="selectRoom('lucid')">
+          <div class="room-info">
+            <div class="room-name">Lucid</div>
+            <div class="room-sub" id="sub-lucid"></div>
+          </div>
+          <div class="chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ GUIDE MENU ───────────────────────────────────── -->
+  <div id="s-guide" class="screen">
+    <div class="nav-bar">
+      <button class="back-btn" onclick="pop()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        <span id="lbl-back-guide"></span>
+      </button>
+      <div class="nav-title" id="lbl-nav-guide"></div>
+    </div>
+
+    <div class="guide-header">
+      <div class="guide-room-name" id="g-room-name"></div>
+      <div class="guide-room-type" id="g-room-type"></div>
+    </div>
+
+    <div class="scroll-area">
+      <div class="guide-list" id="guide-list"></div>
+    </div>
+  </div>
+
+</div><!-- #app -->
+
+<script>
+/* ══════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════ */
+const LINKS = {
+  checkin_art:  { ko:'https://yufuin-check-in-guide-ko-2kr6t3t.gamma.site/',   en:'https://yufuin-check-in-guide-en-j1rr35v.gamma.site/',   ja:'https://yufuin-check-in-guide-ja-9t8jk7j.gamma.site/' },
+  checkin_villa:{ ko:'https://spvy-check-in-guide-kr-i34x94n.gamma.site/',     en:'https://spvy-check-in-guide-en-pgpw2un.gamma.site/',     ja:'https://spvy-check-in-guide-jp-jkrw684.gamma.site/' },
+  checkout_art: { ko:'https://yufuin-check-out-guide-k-bdupx6w.gamma.site/',   en:'https://yufuin-check-out-guide-e-k10jnba.gamma.site/',   ja:'https://yufuin-check-out-guide-j-dh3u97l.gamma.site/' },
+  checkout_villa:{ ko:'https://spvy-check-out-guide-kr-0ia7k66.gamma.site/',   en:'https://spvy-check-out-guide-en-awe7eso.gamma.site/',    ja:'https://spvy-check-out-guide-jp-wqr6reo.gamma.site/' },
+  rm_reflections:{ ko:'https://reflections-room-guide-k-rn2ysrk.gamma.site/', en:'https://reflections-room-guide-e-5hc0t54.gamma.site/',   ja:'https://reflections-room-guide-j-o3lwizs.gamma.site/' },
+  rm_rising_sun: { ko:'https://risingsun-room-guide-kr-8fkdwj5.gamma.site/',  en:'https://risingsun-room-guide-en-lmqol69.gamma.site/',    ja:'https://risingsun-room-guide-jp-kneht2l.gamma.site/' },
+  rm_daydream:   { ko:'https://daydream-room-guide-kr-wedlwsf.gamma.site/',    en:'https://daydream-room-guide-en-vj6c4ud.gamma.site/',     ja:'https://daydream-room-guide-jp-r2f0dgv.gamma.site/' },
+  rm_lucid:      { ko:'https://lucid-room-guide-kr-pl018qa.gamma.site/',       en:'https://lucid-room-guide-en-uk9ilfi.gamma.site/',        ja:'https://lucid-room-guide-jp-07eg14u.gamma.site/' },
+  parking:       { ko:'https://parking-information-kr-924yisr.gamma.site/',    en:'https://parking-information-en-vuiscni.gamma.site/',     ja:'https://parking-information-jp-l9tdskr.gamma.site/' },
+  stay_rules:    { ko:'https://stay-rules--tbaftms.gamma.site/',               en:'https://stay-rules-ydam8ex.gamma.site/',                ja:'https://stay-rules-kculc94.gamma.site/' },
+  travel_guide:  { ko:'https://travel-guide-kr-q585gz0.gamma.site/',           en:'https://travel-guide-en-ppcqwo3.gamma.site/',            ja:'https://travel-guide-jp-j4umgv0.gamma.site/' },
+  shiki_story:   { ko:'https://shiki-story-a51q8js.gamma.site/',               en:'https://shiki-story-english-974ycx0.gamma.site/',        ja:'https://shiki-story-qfypmq2.gamma.site/' },
+};
+
+const ROOMS = {
+  reflections: {
+    name: 'Reflections',
+    sub:  { ko:'201호 · shiki art hotel yufuin', en:'Room 201 · shiki art hotel yufuin', ja:'201号室 · shiki art hotel yufuin' },
+    checkin:  'checkin_art',
+    checkout: 'checkout_art',
+    rmGuide:  'rm_reflections',
+  },
+  rising_sun: {
+    name: 'Rising Sun',
+    sub:  { ko:'301호 · shiki art hotel yufuin', en:'Room 301 · shiki art hotel yufuin', ja:'301号室 · shiki art hotel yufuin' },
+    checkin:  'checkin_art',
+    checkout: 'checkout_art',
+    rmGuide:  'rm_rising_sun',
+  },
+  daydream: {
+    name: 'Daydream',
+    sub:  { ko:'Private Villa 101 · shiki private villa yufuin', en:'Private Villa 101 · shiki private villa yufuin', ja:'プライベートヴィラ 101 · shiki private villa yufuin' },
+    checkin:  'checkin_villa',
+    checkout: 'checkout_villa',
+    rmGuide:  'rm_daydream',
+  },
+  lucid: {
+    name: 'Lucid',
+    sub:  { ko:'Private Villa 102 · shiki private villa yufuin', en:'Private Villa 102 · shiki private villa yufuin', ja:'プライベートヴィラ 102 · shiki private villa yufuin' },
+    checkin:  'checkin_villa',
+    checkout: 'checkout_villa',
+    rmGuide:  'rm_lucid',
+  },
+};
+
+const I18N = {
+  ko: {
+    welcome_title: '어서오세요',
+    welcome_sub:   'shiki에 오신 것을 환영합니다.\n사전체크인 또는 안내를 확인해주세요.',
+    btn_guide:     '안내 보기',
+    btn_checkin:   '사전체크인 하기',
+    back:          '뒤로',
+    nav_rooms:     '객실 선택',
+    nav_guide:     '안내',
+    room_section:  '객실을 선택해주세요',
+    lbl_checkin:   '체크인 안내',
+    dsc_checkin:   '체크인 절차 및 도어록 안내',
+    lbl_checkout:  '체크아웃 안내',
+    dsc_checkout:  '체크아웃 절차 및 주의사항',
+    lbl_roomguide: '룸 가이드',
+    dsc_roomguide: '시설 이용 방법 안내',
+    lbl_parking:   '주차장 안내',
+    dsc_parking:   '주차 및 찾아오시는 길',
+    lbl_rules:     '숙박 룰',
+    dsc_rules:     '시설 이용 규칙 안내',
+    lbl_travel:    '여행 가이드',
+    dsc_travel:    '유후인 추천 명소 안내',
+    lbl_story:     'Shiki Story',
+    dsc_story:     'shiki의 브랜드 스토리',
+    sec_room:      '객실 안내',
+    sec_common:    '공통 안내',
+  },
+  en: {
+    welcome_title: 'Welcome',
+    welcome_sub:   'Thank you for choosing shiki.\nPlease complete your pre check-in\nor browse our guest guide.',
+    btn_guide:     'View Guest Guide',
+    btn_checkin:   'Pre Check-in',
+    back:          'Back',
+    nav_rooms:     'Select Room',
+    nav_guide:     'Guide',
+    room_section:  'Please select your room',
+    lbl_checkin:   'Check-in Guide',
+    dsc_checkin:   'Check-in procedure & door lock',
+    lbl_checkout:  'Check-out Guide',
+    dsc_checkout:  'Check-out procedure & notes',
+    lbl_roomguide: 'Room Guide',
+    dsc_roomguide: 'Facilities & amenities',
+    lbl_parking:   'Parking & Access',
+    dsc_parking:   'Parking info & directions',
+    lbl_rules:     'Stay Rules',
+    dsc_rules:     'House rules & guidelines',
+    lbl_travel:    'Travel Guide',
+    dsc_travel:    'Yufuin recommended spots',
+    lbl_story:     'Shiki Story',
+    dsc_story:     'The story behind shiki',
+    sec_room:      'Your Room',
+    sec_common:    'General Information',
+  },
+  ja: {
+    welcome_title: 'ようこそ',
+    welcome_sub:   'shikiへようこそ。\n事前チェックインまたは\nご案内をご確認ください。',
+    btn_guide:     'ゲストガイドを見る',
+    btn_checkin:   '事前チェックイン',
+    back:          '戻る',
+    nav_rooms:     'お部屋を選択',
+    nav_guide:     'ガイド',
+    room_section:  'お部屋をお選びください',
+    lbl_checkin:   'チェックインガイド',
+    dsc_checkin:   'チェックイン手順・ドアロック',
+    lbl_checkout:  'チェックアウトガイド',
+    dsc_checkout:  'チェックアウト手順・注意事項',
+    lbl_roomguide: 'ルームガイド',
+    dsc_roomguide: '施設・アメニティのご案内',
+    lbl_parking:   '駐車場・アクセス',
+    dsc_parking:   '駐車場情報・アクセス方法',
+    lbl_rules:     '宿泊ルール',
+    dsc_rules:     'ハウスルール・ご利用案内',
+    lbl_travel:    'トラベルガイド',
+    dsc_travel:    '由布院のおすすめスポット',
+    lbl_story:     'Shiki Story',
+    dsc_story:     'shikiのブランドストーリー',
+    sec_room:      'お部屋のご案内',
+    sec_common:    '共通案内',
+  },
+};
+
+/* ══════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════ */
+let lang        = 'ko';
+let activeRoom  = null;
+let history     = ['s-landing'];
+
+/* ══════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════ */
+function push(screenId) {
+  const current = document.getElementById(history[history.length - 1]);
+  const next    = document.getElementById(screenId);
+
+  current.classList.add('exit-left');
+  next.classList.add('active');
+  history.push(screenId);
+
+  // Clean up exit-left after transition
+  setTimeout(() => current.classList.remove('exit-left'), 400);
+}
+
+function pop() {
+  if (history.length <= 1) return;
+  const currentId = history.pop();
+  const current   = document.getElementById(currentId);
+  const prevId    = history[history.length - 1];
+  const prev      = document.getElementById(prevId);
+
+  current.style.transition = 'transform 0.32s cubic-bezier(0.32,0,0.15,1)';
+  current.classList.remove('active');
+  prev.classList.remove('exit-left');
+
+  setTimeout(() => { current.style.transition = ''; }, 350);
+}
+
+function selectRoom(roomKey) {
+  activeRoom = roomKey;
+  renderGuide();
+  push('s-guide');
+}
+
+function openCheckin() {
+  window.open('https://checkin.hotelshiki.com/en/checkin', '_blank');
+}
+
+/* ══════════════════════════════════════════════════
+   LANGUAGE
+═══════════════════════════════════════════════════ */
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('on'));
+  document.querySelector(`.lang-btn[onclick="setLang('${l}')"]`).classList.add('on');
+  renderAll();
+}
+
+function t(key) { return I18N[lang][key] || ''; }
+function lk(key) { return LINKS[key][lang]; }
+
+/* ══════════════════════════════════════════════════
+   RENDER
+═══════════════════════════════════════════════════ */
+function renderAll() {
+  const i = I18N[lang];
+
+  // Landing
+  el('lbl-welcome-title').textContent  = i.welcome_title;
+  el('lbl-welcome-sub').innerHTML      = i.welcome_sub.replace(/\n/g, '<br>');
+  el('btn-guide').textContent          = i.btn_guide;
+  el('btn-checkin').textContent        = i.btn_checkin;
+
+  // Rooms screen
+  el('lbl-back-rooms').textContent     = i.back;
+  el('lbl-nav-rooms').textContent      = i.nav_rooms;
+  el('lbl-room-section').textContent   = i.room_section;
+
+  Object.keys(ROOMS).forEach(key => {
+    const sub = document.getElementById('sub-' + key);
+    if (sub) sub.textContent = ROOMS[key].sub[lang];
+  });
+
+  // Guide screen
+  el('lbl-back-guide').textContent     = i.back;
+  el('lbl-nav-guide').textContent      = i.nav_guide;
+
+  if (activeRoom) renderGuide();
+}
+
+function renderGuide() {
+  const room = ROOMS[activeRoom];
+  const i    = I18N[lang];
+
+  el('g-room-name').textContent = room.name;
+  el('g-room-type').textContent = room.sub[lang];
+
+  const roomItems = [
+    { icon:'🔑', label: i.lbl_checkin,   desc: i.dsc_checkin,   url: lk(room.checkin)  },
+    { icon:'🚪', label: i.lbl_checkout,  desc: i.dsc_checkout,  url: lk(room.checkout) },
+    { icon:'🛏', label: i.lbl_roomguide, desc: i.dsc_roomguide, url: lk(room.rmGuide)  },
+  ];
+  const commonItems = [
+    { icon:'🚗', label: i.lbl_parking, desc: i.dsc_parking, url: lk('parking')     },
+    { icon:'📋', label: i.lbl_rules,   desc: i.dsc_rules,   url: lk('stay_rules')  },
+    { icon:'🗺', label: i.lbl_travel,  desc: i.dsc_travel,  url: lk('travel_guide') },
+    { icon:'📖', label: i.lbl_story,   desc: i.dsc_story,   url: lk('shiki_story') },
+  ];
+
+  const list = el('guide-list');
+  list.innerHTML = '';
+
+  appendSection(list, i.sec_room,    roomItems);
+  appendSection(list, i.sec_common,  commonItems);
+}
+
+function appendSection(container, label, items) {
+  const sec = document.createElement('div');
+  sec.className = 'guide-section-label';
+  sec.textContent = label;
+  container.appendChild(sec);
+
+  items.forEach(item => {
+    const a = document.createElement('a');
+    a.href   = item.url;
+    a.target = '_blank';
+    a.rel    = 'noopener noreferrer';
+    a.className = 'guide-card';
+    a.innerHTML = `
+      <div class="guide-icon">${item.icon}</div>
+      <div class="guide-text">
+        <div class="guide-name">${item.label}</div>
+        <div class="guide-desc">${item.desc}</div>
+      </div>
+      <div class="chevron">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>`;
+    container.appendChild(a);
+  });
+}
+
+function el(id) { return document.getElementById(id); }
+
+/* ══════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════ */
+renderAll();
+</script>
+</body>
+</htm
