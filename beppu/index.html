@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Shiki Beppu — Coming Soon</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1a2c5b;
+      --muted: #8a8fa8;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    html, body {
+      height: 100%;
+      background: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+                   'Hiragino Sans', 'Noto Sans KR', 'Noto Sans JP', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 32px;
+      padding-top: calc(var(--safe-top) + 40px);
+      padding-bottom: calc(var(--safe-bottom) + 40px);
+      text-align: center;
+      gap: 20px;
+    }
+    img { width: 72px; }
+    h1 {
+      font-size: 20px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--navy);
+    }
+    p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--navy);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(26,44,91,0.3);
+      padding-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <img src="../logo/Logo_2.png" alt="Shiki">
+  <h1>Beppu — Coming Soon</h1>
+  <p>튠정み咉��中です。<br>最嬫早開�有쇪，</p>
+  <a href="../">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    지점을 섔다따 분로
+  </a>
+</div>
+</body>
+</html>
