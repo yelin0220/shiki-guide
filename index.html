@@ -544,9 +544,9 @@
   <div id="s-menu" class="screen">
 
     <div class="lang-bar">
-      <button class="lang-btn"    onclick="setLang('en')">EN</button>
+      <button class="lang-btn on" onclick="setLang('en')">EN</button>
       <button class="lang-btn"    onclick="setLang('ja')">JP</button>
-      <button class="lang-btn on" onclick="setLang('ko')">KR</button>
+      <button class="lang-btn"    onclick="setLang('ko')">KR</button>
     </div>
 
     <div class="slideshow" id="slideshow">
@@ -566,9 +566,9 @@
   <div id="s-rooms" class="screen light-bg">
 
     <div class="lang-bar">
-      <button class="lang-btn"    onclick="setLang('en')">EN</button>
+      <button class="lang-btn on" onclick="setLang('en')">EN</button>
       <button class="lang-btn"    onclick="setLang('ja')">JP</button>
-      <button class="lang-btn on" onclick="setLang('ko')">KR</button>
+      <button class="lang-btn"    onclick="setLang('ko')">KR</button>
     </div>
 
     <div class="nav-bar">
@@ -646,9 +646,9 @@
   <div id="s-guide" class="screen light-bg">
 
     <div class="lang-bar">
-      <button class="lang-btn"    onclick="setLang('en')">EN</button>
+      <button class="lang-btn on" onclick="setLang('en')">EN</button>
       <button class="lang-btn"    onclick="setLang('ja')">JP</button>
-      <button class="lang-btn on" onclick="setLang('ko')">KR</button>
+      <button class="lang-btn"    onclick="setLang('ko')">KR</button>
     </div>
 
     <div class="nav-bar">
@@ -765,7 +765,7 @@ const I18N = {
   ja: {
     splash_sub:    'A place to feel art.',
     menu_greeting: 'SHIKI ART HOTEL YUFU',
-    menu_question: '事前チェックインはお済みです？',
+    menu_question: '事前チェックインはお済みですか？',
     menu_desc:     '事前チェックインを完了されますと、客室入室用パスワードの確認と駐車場のご予約が可能になります。',
     btn_guide:     'ゲストガイドを見る',
     btn_checkin:   '事前チェックイン',
@@ -777,8 +777,8 @@ const I18N = {
     lbl_checkout:  'チェックアウトガイド', dsc_checkout:  'チェックアウト手順と注意事項',
     lbl_roomguide: 'ルームガイド',         dsc_roomguide: '室内設備のご利用方法',
     lbl_parking:   '駐車場・アクセス',     dsc_parking:   '駐車場情報とアクセス方法',
-    lbl_rules:     '宿泊ルール',           dsc_rules:     '施�h�利用規則のご案内',
-    lbl_travel:    '旅行ガイド',           dsc_travel:    '由布院のおす＊スポット',
+    lbl_rules:     '宿泊ルール',           dsc_rules:     '施設利用規則のご案内',
+    lbl_travel:    '旅行ガイド',           dsc_travel:    '由布院のおすすめスポット',
     lbl_story:     'Shiki Story',          dsc_story:     'shikiのブランドストーリー',
     sec_room:      'お部屋のご案内',
     sec_common:    '共通のご案内',
@@ -799,7 +799,7 @@ const SLIDES = [
 /* ══════════════════════════════════════════
    STATE
 ══════════════════════════════════════════ */
-let lang        = 'ko';
+let lang        = 'en';
 let screenStack = ['s-splash'];
 let slideIdx    = 0;
 let slideTimer  = null;
@@ -962,61 +962,4 @@ function renderGuide(roomKey) {
       ]
     },
     {
-      label: i.sec_common,
-      items: [
-        { key: 'lbl_parking',   dsc: 'dsc_parking',   link: LINKS.parking[lang],         icon: '🏎' },
-        { key: 'lbl_rules',     dsc: 'dsc_rules',     link: LINKS.stay_rules[lang],      icon: '📾' },
-        { key: 'lbl_travel',    dsc: 'dsc_travel',    link: LINKS.travel_guide[lang],    icon: '🔍' },
-        { key: 'lbl_story',     dsc: 'dsc_story',     link: LINKS.shiki_story[lang],      icon: '💼' },
-      ]
-    },
-  ];
-
-  const container = document.getElementById('guide-list');
-  container.innerHTML = '';
-
-  sections.forEach(sec => {
-    const label = document.createElement('div');
-    label.className = 'guide-section-label';
-    label.textContent = sec.label;
-    container.appendChild(label);
-
-    const list = document.createElement('div');
-    list.className = 'guide-list';
-
-    sec.items.forEach(item => {
-      const a = document.createElement('a');
-      a.className = 'guide-card';
-      a.href = item.link;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.innerHTML = `
-        <div class="guide-icon">${item.icon}</div>
-        <div class="guide-text">
-          <div class="guide-name">${i[litem.key]}</div>
-          <div class="guide-desc">${i[item.dsc]}</div>
-        </div>
-        <div class="guide-arrow">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"/>
-          </svg>
-        </div>
-      `;
-      list.appendChild(a);
-    });
-
-    container.appendChild(list);
-  });
-}
-
-function openCheckin() {
-  window.open(CHECKIN_URL, '_blank', 'noopener');
-}
-
-// Init
-initSlideshow();
-applyI18N();
-</script>
-</body>
-  </html>
+      label: i.sec_com
