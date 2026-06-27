@@ -37,6 +37,7 @@
       overflow: hidden;
     }
 
+    /* ── Screens ──────────────────────────────────────── */
     .screen {
       position: absolute;
       inset: 0;
@@ -49,12 +50,16 @@
     .screen.active    { transform: translateX(0); }
     .screen.exit-left { transform: translateX(-28%); }
 
+    /* ════════════════════════════════════════
+       SCREEN 1 — SPLASH
+    ════════════════════════════════════════ */
     #s-splash {
       transform: translateX(0);
       background: var(--navy);
       flex-direction: column;
     }
 
+    /* Hero image — top portion */
     .splash-image {
       position: relative;
       flex: 1;
@@ -82,20 +87,22 @@
         rgba(10,18,40,0.72) 100%
       );
     }
+    /* Logo overlay on image */
     .splash-logo-wrap {
       position: absolute;
-      top: 42%;
+      top: 30%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 2;
       text-align: center;
     }
     .splash-logo-wrap img {
-      width: 162px;
+      width: 146px;
       height: auto;
       filter: brightness(0) invert(1);
     }
 
+    /* Text overlay at bottom of image */
     .splash-image-text {
       position: absolute;
       bottom: 32px;
@@ -113,6 +120,14 @@
       color: rgba(255,255,255,0.75);
       margin-bottom: 8px;
     }
+    .splash-image-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: #fff;
+      margin-bottom: 6px;
+    }
     .splash-image-sub {
       font-family: 'Cormorant Garamond', serif;
       font-size: 16px;
@@ -122,6 +137,7 @@
       letter-spacing: 0.03em;
     }
 
+    /* Bottom CTA area */
     .splash-cta {
       background: #faf2e8;
       padding: 30px 32px;
@@ -147,21 +163,29 @@
     }
     .btn-start:active { transform: scale(0.97); }
 
+    /* Splash exit animations */
     #s-splash.exiting .splash-image {
-      animation: splashSlideUp 0.55s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+      animation: splashSlideUp 0.78s cubic-bezier(0.22, 0, 0.36, 1) forwards;
     }
     #s-splash.exiting .splash-cta {
-      animation: splashFadeOut 0.35s ease-out 0.1s forwards;
+      animation: splashFadeOut 0.3s ease-out 0.18s forwards;
     }
     @keyframes splashSlideUp {
-      from { transform: translateY(0); opacity: 1; }
-      to   { transform: translateY(-110%); opacity: 0.6; }
+      0%   { transform: translateY(0);     opacity: 1; }
+      10%  { transform: translateY(5%);    opacity: 1; }
+      22%  { transform: translateY(-18%);  opacity: 1; }
+      38%  { transform: translateY(-8%);   opacity: 1; }
+      55%  { transform: translateY(-55%);  opacity: 0.9; }
+      100% { transform: translateY(-115%); opacity: 0.5; }
     }
     @keyframes splashFadeOut {
       from { opacity: 1; }
       to   { opacity: 0; }
     }
 
+    /* ════════════════════════════════════════
+       PERSISTENT LANG BAR
+    ════════════════════════════════════════ */
     .lang-bar {
       position: absolute;
       top: calc(var(--safe-top) + 16px);
@@ -171,14 +195,13 @@
       z-index: 50;
     }
     .lang-btn {
-      font-family: 'DM Sans', sans-serif;
       padding: 5px 12px;
       border-radius: 20px;
       border: 1.5px solid rgba(255,255,255,0.3);
       background: transparent;
       color: rgba(255,255,255,0.6);
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.05em;
       cursor: pointer;
       transition: all 0.18s;
@@ -189,6 +212,7 @@
       border-color: rgba(255,255,255,0.7);
       color: #fff;
     }
+    /* On light screens */
     .screen.light-bg .lang-bar .lang-btn {
       border-color: rgba(28,45,91,0.25);
       color: rgba(28,45,91,0.5);
@@ -199,8 +223,14 @@
       color: #fff;
     }
 
-    #s-menu { background: var(--navy); }
+    /* ════════════════════════════════════════
+       SCREEN 2 — MENU (Yufuin Main)
+    ════════════════════════════════════════ */
+    #s-menu {
+      background: #faf2e8;
+    }
 
+    /* Slideshow */
     .slideshow {
       position: relative;
       flex-shrink: 0;
@@ -242,6 +272,7 @@
       transform: scale(1.3);
     }
 
+    /* Menu body */
     .menu-body {
       flex: 1;
       display: flex;
@@ -252,56 +283,57 @@
       gap: 12px;
     }
     .menu-greeting {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.22em;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
+      color: rgba(10,18,40,0.45);
       margin-bottom: 2px;
     }
     .menu-question {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 300;
-      color: #fff;
-      letter-spacing: 0.02em;
+      color: var(--navy);
+      letter-spacing: 0.03em;
       margin-bottom: 12px;
     }
     .btn-primary {
-      font-family: 'DM Sans', sans-serif;
       width: 100%;
       padding: 16px 24px;
       border-radius: 14px;
       border: none;
       background: var(--cream);
       color: var(--navy);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       transition: transform 0.1s, opacity 0.15s;
     }
     .btn-primary:active { transform: scale(0.98); }
     .btn-secondary {
-      font-family: 'DM Sans', sans-serif;
       width: 100%;
       padding: 15px 24px;
       border-radius: 14px;
-      border: 1.5px solid rgba(255,255,255,0.3);
+      border: 1.5px solid rgba(10,18,40,0.25);
       background: transparent;
-      color: #fff;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       transition: transform 0.1s;
     }
     .btn-secondary:active { transform: scale(0.98); }
 
-    #s-rooms { background: var(--cream); }
+    /* ════════════════════════════════════════
+       SCREEN 3 — ROOM LIST
+    ════════════════════════════════════════ */
+    #s-rooms {
+      background: var(--cream);
+    }
 
     .nav-bar {
       display: flex;
@@ -317,18 +349,20 @@
       background: none;
       border: none;
       color: var(--navy);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 500;
       cursor: pointer;
       padding: 6px 8px 6px 2px;
       -webkit-tap-highlight-color: transparent;
       opacity: 0.7;
     }
-    .back-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .back-btn svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
     .nav-title {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 600;
       color: var(--navy);
       letter-spacing: 0.02em;
@@ -346,16 +380,19 @@
     }
 
     .section-label {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.16em;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--muted);
       margin: 12px 0 14px;
     }
 
-    .room-list { display: flex; flex-direction: column; gap: 10px; }
+    .room-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
     .room-card {
       background: #fff;
       border-radius: 16px;
@@ -370,21 +407,27 @@
     }
     .room-card:active { transform: scale(0.98); background: #f5f5f5; }
     .room-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 19px;
-      font-weight: 500;
+      font-size: 17px;
+      font-weight: 600;
       color: var(--navy);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.01em;
     }
     .room-sub {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
+      font-size: 12px;
       color: var(--muted);
       margin-top: 3px;
     }
-    .chevron { color: rgba(28,45,91,0.35); flex-shrink: 0; }
+    .chevron {
+      color: rgba(28,45,91,0.35);
+      flex-shrink: 0;
+    }
 
-    #s-guide { background: var(--cream); }
+    /* ════════════════════════════════════════
+       SCREEN 4 — GUIDE LINKS
+    ════════════════════════════════════════ */
+    #s-guide {
+      background: var(--cream);
+    }
 
     .guide-header {
       padding: 8px 24px 20px;
@@ -392,29 +435,30 @@
       flex-shrink: 0;
     }
     .guide-room-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 300;
       color: var(--navy);
       letter-spacing: 0.04em;
     }
     .guide-room-type {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
+      font-size: 12px;
       color: var(--muted);
       margin-top: 4px;
     }
 
     .guide-section-label {
-      font-family: 'DM Sans', sans-serif;
       font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
+      font-weight: 700;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
       margin: 20px 0 10px;
     }
-    .guide-list { display: flex; flex-direction: column; gap: 8px; }
+    .guide-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
     .guide-card {
       background: #fff;
       border-radius: 14px;
@@ -442,24 +486,27 @@
     }
     .guide-text { flex: 1; }
     .guide-name {
-      font-family: 'DM Sans', sans-serif;
       font-size: 14px;
       font-weight: 600;
       color: var(--navy);
     }
     .guide-desc {
-      font-family: 'DM Sans', sans-serif;
       font-size: 11px;
       color: var(--muted);
       margin-top: 2px;
     }
-    .guide-arrow { color: rgba(28,45,91,0.3); flex-shrink: 0; }
+    .guide-arrow {
+      color: rgba(28,45,91,0.3);
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
 <div id="app">
 
+  <!-- ═══ SCREEN 1: SPLASH ═══════════════════════════════ -->
   <div id="s-splash" class="screen active">
+
     <div class="splash-image" id="splash-img">
       <img src="images/main_image.jpg" alt="Shiki">
       <div class="splash-logo-wrap">
@@ -470,20 +517,26 @@
         <div class="splash-image-sub">A place to discover a new lifestyle</div>
       </div>
     </div>
+
     <div class="splash-cta" id="splash-cta">
       <button class="btn-start" id="btn-start" onclick="startExperience()">START</button>
     </div>
+
   </div>
 
+  <!-- ═══ SCREEN 2: YUFUIN MENU ═══════════════════════════ -->
   <div id="s-menu" class="screen">
+
     <div class="lang-bar">
       <button class="lang-btn on" onclick="setLang('ko')">KR</button>
       <button class="lang-btn"    onclick="setLang('en')">EN</button>
       <button class="lang-btn"    onclick="setLang('ja')">JP</button>
     </div>
+
     <div class="slideshow" id="slideshow">
       <div class="slide-dots" id="slide-dots"></div>
     </div>
+
     <div class="menu-body">
       <div class="menu-greeting" id="menu-greeting">Shiki Art Hotel &amp; Private Villa Yufuin</div>
       <div class="menu-question" id="menu-question">무엇을 도와드릴까요?</div>
@@ -492,12 +545,15 @@
     </div>
   </div>
 
+  <!-- ═══ SCREEN 3: ROOM LIST ══════════════════════════════ -->
   <div id="s-rooms" class="screen light-bg">
+
     <div class="lang-bar">
       <button class="lang-btn on" onclick="setLang('ko')">KR</button>
       <button class="lang-btn"    onclick="setLang('en')">EN</button>
       <button class="lang-btn"    onclick="setLang('ja')">JP</button>
     </div>
+
     <div class="nav-bar">
       <button class="back-btn" onclick="pop()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -508,9 +564,11 @@
       </button>
       <div class="nav-title" id="lbl-nav-rooms"></div>
     </div>
+
     <div class="scroll-area">
       <div class="section-label" id="lbl-room-section"></div>
       <div class="room-list">
+
         <div class="room-card" onclick="selectRoom('reflections')">
           <div class="room-info">
             <div class="room-name">Reflections</div>
@@ -523,6 +581,7 @@
             </svg>
           </div>
         </div>
+
         <div class="room-card" onclick="selectRoom('rising_sun')">
           <div class="room-info">
             <div class="room-name">Rising Sun</div>
@@ -535,6 +594,7 @@
             </svg>
           </div>
         </div>
+
         <div class="room-card" onclick="selectRoom('daydream')">
           <div class="room-info">
             <div class="room-name">Daydream</div>
@@ -547,6 +607,7 @@
             </svg>
           </div>
         </div>
+
         <div class="room-card" onclick="selectRoom('lucid')">
           <div class="room-info">
             <div class="room-name">Lucid</div>
@@ -559,16 +620,20 @@
             </svg>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 
+  <!-- ═══ SCREEN 4: GUIDE LINKS ════════════════════════════ -->
   <div id="s-guide" class="screen light-bg">
+
     <div class="lang-bar">
       <button class="lang-btn on" onclick="setLang('ko')">KR</button>
       <button class="lang-btn"    onclick="setLang('en')">EN</button>
       <button class="lang-btn"    onclick="setLang('ja')">JP</button>
     </div>
+
     <div class="nav-bar">
       <button class="back-btn" onclick="pop()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -579,18 +644,24 @@
       </button>
       <div class="nav-title" id="lbl-nav-guide"></div>
     </div>
+
     <div class="guide-header">
       <div class="guide-room-name" id="g-room-name"></div>
       <div class="guide-room-type" id="g-room-type"></div>
     </div>
+
     <div class="scroll-area">
       <div id="guide-list"></div>
     </div>
+
   </div>
 
-</div>
+</div><!-- #app -->
 
 <script>
+/* ══════════════════════════════════════════
+   DATA
+══════════════════════════════════════════ */
 const CHECKIN_URL = 'https://checkin.hotelshiki.com/en/checkin';
 
 const LINKS = {
@@ -633,6 +704,7 @@ const ROOMS = {
 
 const I18N = {
   ko: {
+    splash_sub:    'A place to feel art.',
     menu_greeting: 'Shiki Art Hotel & Private Villa Yufuin',
     menu_question: '무엇을 도와드릴까요?',
     btn_guide:     '안내 보기',
@@ -652,6 +724,7 @@ const I18N = {
     sec_common:    '공통 안내',
   },
   en: {
+    splash_sub:    'A place to feel art.',
     menu_greeting: 'Shiki Art Hotel & Private Villa Yufuin',
     menu_question: 'How can we help you?',
     btn_guide:     'View Guest Guide',
@@ -671,6 +744,7 @@ const I18N = {
     sec_common:    'General Info',
   },
   ja: {
+    splash_sub:    'A place to feel art.',
     menu_greeting: 'Shiki Art Hotel & Private Villa Yufuin',
     menu_question: 'ご用件はいかがでしょうか？',
     btn_guide:     'ゲストガイドを見る',
@@ -702,19 +776,27 @@ const SLIDES = [
   'images/yufuin/lucid/sahy-pv_2_ref-32.jpg',
 ];
 
+/* ══════════════════════════════════════════
+   STATE
+══════════════════════════════════════════ */
 let lang        = 'ko';
 let screenStack = ['s-splash'];
 let slideIdx    = 0;
 let slideTimer  = null;
 let currentRoom = null;
 
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
 function push(id) {
   const prev   = screenStack[screenStack.length - 1];
   const prevEl = document.getElementById(prev);
   const nextEl = document.getElementById(id);
+
   prevEl.classList.add('exit-left');
   nextEl.classList.add('active');
   screenStack.push(id);
+
   setTimeout(() => prevEl.classList.remove('exit-left'), 420);
 }
 
@@ -722,13 +804,20 @@ function pop() {
   if (screenStack.length <= 1) return;
   const curr   = screenStack.pop();
   const prev   = screenStack[screenStack.length - 1];
-  document.getElementById(curr).classList.remove('active');
-  document.getElementById(prev).classList.remove('exit-left');
+  const currEl = document.getElementById(curr);
+  const prevEl = document.getElementById(prev);
+
+  currEl.classList.remove('active');
+  prevEl.classList.remove('exit-left');
 }
 
+/* ══════════════════════════════════════════
+   SPLASH TRANSITION
+══════════════════════════════════════════ */
 function startExperience() {
   const splash = document.getElementById('s-splash');
   splash.classList.add('exiting');
+
   setTimeout(() => {
     splash.classList.remove('active', 'exiting');
     const menu = document.getElementById('s-menu');
@@ -741,16 +830,23 @@ function startExperience() {
   }, 620);
 }
 
+/* ══════════════════════════════════════════
+   SLIDESHOW
+══════════════════════════════════════════ */
 function initSlideshow() {
   const ss   = document.getElementById('slideshow');
   const dots = document.getElementById('slide-dots');
+
   SLIDES.forEach((src, i) => {
     const slide = document.createElement('div');
     slide.className = 'slide' + (i === 0 ? ' active' : '');
     const img = document.createElement('img');
-    img.src = src; img.alt = ''; img.loading = i < 3 ? 'eager' : 'lazy';
+    img.src     = src;
+    img.alt     = '';
+    img.loading = i < 3 ? 'eager' : 'lazy';
     slide.appendChild(img);
     ss.insertBefore(slide, dots);
+
     const dot = document.createElement('div');
     dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
     dots.appendChild(dot);
@@ -772,6 +868,9 @@ function nextSlide() {
   dotEls[slideIdx].classList.add('active');
 }
 
+/* ══════════════════════════════════════════
+   LANGUAGE
+══════════════════════════════════════════ */
 function setLang(l) {
   lang = l;
   document.querySelectorAll('.lang-btn').forEach(b => {
@@ -783,22 +882,29 @@ function setLang(l) {
 
 function applyI18N() {
   const i = I18N[lang];
+
   document.getElementById('menu-greeting').textContent = i.menu_greeting;
   document.getElementById('menu-question').textContent = i.menu_question;
   document.getElementById('btn-guide').textContent     = i.btn_guide;
   document.getElementById('btn-checkin').textContent   = i.btn_checkin;
-  document.getElementById('lbl-back-rooms').textContent   = i.back;
-  document.getElementById('lbl-nav-rooms').textContent    = i.nav_rooms;
+
+  document.getElementById('lbl-back-rooms').textContent  = i.back;
+  document.getElementById('lbl-nav-rooms').textContent   = i.nav_rooms;
   document.getElementById('lbl-room-section').textContent = i.room_section;
   document.getElementById('sub-reflections').textContent  = ROOMS.reflections.sub[lang];
   document.getElementById('sub-rising_sun').textContent   = ROOMS.rising_sun.sub[lang];
   document.getElementById('sub-daydream').textContent     = ROOMS.daydream.sub[lang];
   document.getElementById('sub-lucid').textContent        = ROOMS.lucid.sub[lang];
-  document.getElementById('lbl-back-guide').textContent   = i.back;
-  document.getElementById('lbl-nav-guide').textContent    = i.nav_guide;
+
+  document.getElementById('lbl-back-guide').textContent = i.back;
+  document.getElementById('lbl-nav-guide').textContent  = i.nav_guide;
+
   if (currentRoom) renderGuide(currentRoom);
 }
 
+/* ══════════════════════════════════════════
+   ROOM SELECTION
+══════════════════════════════════════════ */
 function selectRoom(roomKey) {
   currentRoom = roomKey;
   renderGuide(roomKey);
@@ -808,8 +914,10 @@ function selectRoom(roomKey) {
 function renderGuide(roomKey) {
   const room = ROOMS[roomKey];
   const i    = I18N[lang];
+
   document.getElementById('g-room-name').textContent = room.name;
   document.getElementById('g-room-type').textContent = room.sub[lang];
+
   const sections = [
     {
       label: i.sec_room,
@@ -829,6 +937,7 @@ function renderGuide(roomKey) {
       ]
     }
   ];
+
   let html = '';
   sections.forEach(sec => {
     html += `<div class="guide-section-label">${sec.label}</div><div class="guide-list">`;
@@ -850,13 +959,20 @@ function renderGuide(roomKey) {
     });
     html += '</div>';
   });
+
   document.getElementById('guide-list').innerHTML = html;
 }
 
+/* ══════════════════════════════════════════
+   CHECK-IN
+══════════════════════════════════════════ */
 function openCheckin() {
   window.open(CHECKIN_URL, '_blank');
 }
 
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
 initSlideshow();
 applyI18N();
 </script>
