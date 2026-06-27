@@ -102,7 +102,8 @@
     .back-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
     .nav-title { font-size: 16px; font-weight: 600; color: var(--navy); letter-spacing: 0.02em; text-align: center; }
     .scroll-area { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 20px; padding-bottom: calc(var(--safe-bottom) + 24px); }
-    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 24px 0 24px; }
+    .section-room-title { font-size: 22px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin: 20px 0 6px; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 24px; }
     .room-list { display: flex; flex-direction: column; gap: 10px; }
     .room-card { background: #fff; border-radius: 16px; padding: 20px 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 0.1s, background 0.12s; box-shadow: 0 1px 4px rgba(28,45,91,0.06); }
     .room-card:active { transform: scale(0.98); background: #f5f5f5; }
@@ -176,9 +177,9 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         <span id="lbl-back-rooms"></span>
       </button>
-      <div class="nav-title" id="lbl-nav-rooms"></div>
     </div>
     <div class="scroll-area">
+      <div class="section-room-title" id="lbl-nav-rooms"></div>
       <div class="section-label" id="lbl-room-section"></div>
       <div class="room-list">
         <div class="room-card" onclick="selectRoom('reflections')">
@@ -240,8 +241,8 @@ const LINKS = {
 };
 
 const ROOMS = {
-  reflections: { name:'Reflections', sub:{ ko:'201호 · shiki art hotel yufu 2f', en:'Room 201 · shiki art hotel yufu 2f', ja:'201号室 · shiki art hotel yufu 2f' }, checkin:'checkin_art', checkout:'checkout_art', rmGuide:'rm_reflections' },
-  rising_sun:  { name:'Rising Sun',  sub:{ ko:'301호 · shiki art hotel yufu 3f', en:'Room 301 · shiki art hotel yufu 3f', ja:'301号室 · shiki art hotel yufu 3f' }, checkin:'checkin_art', checkout:'checkout_art', rmGuide:'rm_rising_sun' },
+  reflections: { name:'Reflections', sub:{ ko:'201호 · SHIKI ART HOTEL YUFU 2F', en:'Room 201 · SHIKI ART HOTEL YUFU 2F', ja:'201号室 · SHIKI ART HOTEL YUFU 2F' }, checkin:'checkin_art', checkout:'checkout_art', rmGuide:'rm_reflections' },
+  rising_sun:  { name:'Rising Sun',  sub:{ ko:'301호 · SHIKI ART HOTEL YUFU 3F', en:'Room 301 · SHIKI ART HOTEL YUFU 3F', ja:'301号室 · SHIKI ART HOTEL YUFU 3F' }, checkin:'checkin_art', checkout:'checkout_art', rmGuide:'rm_rising_sun' },
   daydream:    { name:'Daydream',    sub:{ ko:'Private Villa 101', en:'Private Villa 101', ja:'プライベートヴィラ 101' }, checkin:'checkin_villa', checkout:'checkout_villa', rmGuide:'rm_daydream' },
   lucid:       { name:'Lucid',       sub:{ ko:'Private Villa 102', en:'Private Villa 102', ja:'プライベートヴィラ 102' }, checkin:'checkin_villa', checkout:'checkout_villa', rmGuide:'rm_lucid' },
 };
@@ -409,7 +410,7 @@ function renderGuide(roomKey) {
     const list=document.createElement('div'); list.className='guide-list';
     sec.items.forEach(item => {
       const a=document.createElement('a'); a.className='guide-card'; a.href=item.link; a.target='_blank'; a.rel='noopener';
-      a.innerHTML=`<div class="guide-icon">${item.icon}</div><div class="guide-text"><div class="guide-name">${i[item.key]}</div><div class="guide-desc">${i[item.dsc]}</div></div><div class="guide-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>`;
+      a.innerHTML<`<div class="guide-icon">${item.icon}</div><div class="guide-text"><div class="guide-name">${i[item.key]}</div><div class="guide-desc">${i[item.dsc]}</div></div><div class="guide-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>`;
       list.appendChild(a);
     });
     container.appendChild(list);
@@ -422,4 +423,3 @@ initSlideshow();
 applyI18N();
 </script>
 </body>
-</html>
