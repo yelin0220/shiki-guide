@@ -100,15 +100,18 @@
     .nav-bar { position: relative; display: flex; align-items: center; justify-content: center; padding: calc(var(--safe-top) + 56px) 20px 14px; flex-shrink: 0; }
     .back-btn { position: absolute; top: calc(var(--safe-top) + 14px); left: 16px; display: flex; align-items: center; gap: 4px; background: none; border: none; color: var(--navy); font-size: 14px; font-weight: 500; cursor: pointer; padding: 6px 8px 6px 2px; -webkit-tap-highlight-color: transparent; opacity: 0.7; }
     .back-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    #global-back-btn { position: absolute; top: calc(var(--safe-top) + 14px); left: 16px; z-index: 150; display: none; }
+    #global-nav-title { position: absolute; top: calc(var(--safe-top) + 14px); left: 0; right: 0; z-index: 150; pointer-events: none; display: none; height: 42px; line-height: 42px; }
+    .screen .back-btn, .screen .nav-title { display: none !important; }
     .nav-title { font-size: 16px; font-weight: 600; color: var(--navy); letter-spacing: 0.02em; text-align: center; }
     .scroll-area { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 20px; padding-bottom: calc(var(--safe-bottom) + 24px); }
-    .section-room-title { font-size: 22px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin: 20px 0 6px; }
-    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 24px; }
+    .section-room-title { font-size: 22px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin: 20px 0 6px; line-height: 1.3; text-transform: uppercase; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; color: var(--muted); margin: 0 0 24px; line-height: 1.4; }
     .room-list { display: flex; flex-direction: column; gap: 10px; }
     .room-card { background: #fff; border-radius: 16px; padding: 20px 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 0.1s, background 0.12s; box-shadow: 0 1px 4px rgba(28,45,91,0.06); }
     .room-card:active { transform: scale(0.98); background: #f5f5f5; }
-    .room-name { font-size: 17px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; }
-    .room-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .room-name { font-size: 17px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; line-height: 1.3; }
+    .room-sub { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
     .chevron { color: rgba(28,45,91,0.35); flex-shrink: 0; }
 
     /* GUIDE */
@@ -136,6 +139,14 @@
     <button class="lang-btn"    onclick="setLang('ja')">JP</button>
     <button class="lang-btn"    onclick="setLang('ko')">KR</button>
   </div>
+
+  <!-- GLOBAL BACK BUTTON (fixed, no animation) -->
+  <button class="back-btn" id="global-back-btn" onclick="pop()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    <span id="global-back-label"></span>
+  </button>
+  <!-- GLOBAL NAV TITLE (fixed, no animation) -->
+  <div class="nav-title" id="global-nav-title"></div>
 
   <!-- SCREEN 1: SPLASH -->
   <div id="s-splash" class="screen active">
@@ -313,6 +324,7 @@ function push(id) {
   const prev=screenStack[screenStack.length-1], prevEl=document.getElementById(prev), nextEl=document.getElementById(id);
   prevEl.classList.add('exit-left'); nextEl.classList.add('active'); screenStack.push(id);
   setTimeout(() => prevEl.classList.remove('exit-left'), 420);
+  updateGlobalNav();
 }
 
 function pop() {
@@ -320,6 +332,7 @@ function pop() {
   const curr=screenStack.pop(), prev=screenStack[screenStack.length-1];
   document.getElementById(curr).classList.remove('active');
   document.getElementById(prev).classList.remove('exit-left');
+  updateGlobalNav();
 }
 
 function startExperience() {
@@ -353,6 +366,22 @@ function nextSlide() {
   slides[slideIdx].classList.add('active'); dotEls[slideIdx].classList.add('active');
 }
 
+function updateGlobalNav() {
+  const t=I18N[lang];
+  const backBtn=document.getElementById('global-back-btn');
+  const navTitle=document.getElementById('global-nav-title');
+  const current=screenStack[screenStack.length-1];
+  if (screenStack.length > 1) {
+    backBtn.style.display='flex';
+    document.getElementById('global-back-label').textContent=t.back;
+    if (current==='s-guide') { navTitle.style.display='block'; navTitle.textContent=t.nav_guide; }
+    else { navTitle.style.display='none'; }
+  } else {
+    backBtn.style.display='none';
+    navTitle.style.display='none';
+  }
+}
+
 function setLang(l) {
   lang=l;
   document.querySelectorAll('.lang-btn').forEach(b => {
@@ -379,6 +408,7 @@ function applyI18N() {
   document.getElementById('lbl-back-guide').textContent=i.back;
   document.getElementById('lbl-nav-guide').textContent=i.nav_guide;
   if (currentRoom) renderGuide(currentRoom);
+  updateGlobalNav();
 }
 
 function selectRoom(roomKey) {
