@@ -117,6 +117,457 @@
     /* GUIDE */
     #s-guide { background: #faf2e8; }
     .guide-header { padding: 8px 24px 20px; border-bottom: 1px solid rgba(28,45,91,0.08); flex-shrink: 0; }
+    .guide-room-name { font-size: 22px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin: 20px 0 4px; line-height: 1.3; }
+    .guide-room-type { font-size: 12px; color: var(--muted); margin: 0 0 4px; line-height: 1.4; }
+    .guide-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 20px 0 10px; line-height: 1.4; }
+    .guide-list { display: flex; flex-direction: column; gap: 8px; }
+    .guide-card { background: #fff; border-radius: 14px; padding: 16px 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; text-decoration: none; font-family: inherit; -webkit-tap-highlight-color: transparent; transition: transform 0.1s, background 0.12s; box-shadow: 0 1px 3px rgba(28,45,91,0.05); }
+    .guide-card:active { transform: scale(0.98); background: #f5f5f5; }
+    .guide-icon { width: 40px; height: 40px; border-radius: 11px; background: var(--navy); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .guide-text { flex: 1; }
+    .guide-name { font-size: 14px; font-weight: 600; color: var(--navy); line-height: 1.3; }
+    .guide-desc { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+    .guide-arrow { color: rgba(28,45,91,0.3); flex-shrink: 0; }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- GLOBAL LANG-BAR: sits outside all screens so it stays put during transitions -->
+  <div class="lang-bar" id="global-lang-bar">
+    <button class="lang-btn on" onclick="setLang('en')">EN</button>
+    <button class="lang-btn"    onclick="setLang('ja')">JP</button>
+    <button class="lang-btn"    onclick="setLang('ko')">KR</button>
+  </div>
+
+  <!-- GLOBAL BACK BUTTON (fixed, no animation) -->
+  <button class="back-btn" id="global-back-btn" onclick="pop()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    <span id="global-back-label"></span>
+  </button>
+  <!-- GLOBAL NAV TITLE (fixed, no animation) -->
+  <div class="nav-title" id="global-nav-title"></div>
+
+  <!-- SCREEN 1: SPLASH -->
+  <div id="s-splash" class="screen active">
+    <div class="splash-image-clip">
+      <div class="splash-image" id="splash-img">
+        <img src="images/main_image.jpg" alt="Shiki">
+        <div class="splash-logo-wrap">
+          <img src="logo/Logo_2.png" alt="Shiki">
+        </div>
+        <div class="splash-image-text">
+          <div class="splash-image-welcome">Welcome to Shiki</div>
+          <div class="splash-image-sub">A place to discover a new lifestyle</div>
+        </div>
+      </div>
+    </div>
+    <div class="splash-cta" id="splash-cta">
+      <button class="btn-start" id="btn-start" onclick="startExperience()">START</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: MENU -->
+  <div id="s-menu" class="screen">
+    <div class="slideshow" id="slideshow">
+      <div class="slide-dots" id="slide-dots"></div>
+    </div>
+    <div class="menu-body">
+      <div class="menu-greeting" id="menu-greeting"></div>
+      <div class="menu-question" id="menu-question"></div>
+      <div class="menu-desc" id="menu-desc"></div>
+      <button class="btn-primary"   id="btn-checkin" onclick="openCheckin()"></button>
+      <button class="btn-secondary" id="btn-guide"   onclick="push('s-rooms')"></button>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: ROOM LIST (no lang-bar here — uses global one) -->
+  <div id="s-rooms" class="screen">
+    <div class="nav-bar">
+      <button class="back-btn" onclick="pop()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <span id="lbl-back-rooms"></span>
+      </button>
+    </div>
+    <div class="scroll-area">
+      <div class="section-room-title" id="lbl-nav-rooms"></div>
+      <div class="section-label" id="lbl-room-section"></div>
+      <div class="room-list">
+        <div class="room-card" onclick="selectRoom('reflections')">
+          <div class="room-info"><div class="room-name">Reflections</div><div class="room-sub" id="sub-reflections"></div></div>
+          <div class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+        <div class="room-card" onclick="selectRoom('rising_sun')">
+          <div class="room-info"><div class="room-name">Rising Sun</div><div class="room-sub" id="sub-rising_sun"></div></div>
+          <div class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+        <div class="room-card" onclick="selectRoom('daydream')">
+          <div class="room-info"><div class="room-name">Daydream</div><div class="room-sub" id="sub-daydream"></div></div>
+          <div class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+        <div class="room-card" onclick="selectRoom('lucid')">
+          <div class="room-info"><div class="room-name">Lucid</div><div class="room-sub" id="sub-lucid"></div></div>
+          <div class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: GUIDE LINKS (no lang-bar here — uses global one) -->
+  <div id="s-guide" class="screen">
+    <div class="nav-bar">
+      <button class="back-btn" onclick="pop()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <span id="lbl-back-guide"></span>
+      </button>
+      <div class="nav-title" id="lbl-nav-guide"></div>
+    </div>
+    <div class="scroll-area">
+      <div class="guide-room-name" id="g-room-name"></div>
+      <div class="guide-room-type" id="g-room-type"></div>
+      <div id="guide-list"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const CHECKIN_URL = 'https://checkin.hotelshiki.com/en/checkin';
+
+const LINKS = {
+  checkin_art:   { ko:'https://yufuin-check-in-guide-ko-2kr6t3t.gamma.site/',  en:'https://yufuin-check-in-guide-en-j1rr35v.gamma.site/',  ja:'https://yufuin-check-in-guide-ja-9t8jk7j.gamma.site/' },
+  checkin_villa: { ko:'https://spvy-check-in-guide-kr-i34x94n.gamma.site/',    en:'https://spvy-check-in-guide-en-pgpw2un.gamma.site/',    ja:'https://spvy-check-in-guide-jp-jkrw684.gamma.site/' },
+  checkout_art:  { ko:'https://yufuin-check-out-guide-k-bdupx6w.gamma.site/',  en:'https://yufuin-check-out-guide-e-k10jnba.gamma.site/',  ja:'https://yufuin-check-out-guide-j-dh3u97l.gamma.site/' },
+  checkout_villa:{ ko:'https://spvy-check-out-guide-kr-0ia7k66.gamma.site/',   en:'https://spvy-check-out-guide-en-awe7eso.gamma.site/',   ja:'https://spvy-check-out-guide-jp-wqr6reo.gamma.site/' },
+  rm_reflections:{ ko:'https://reflections-room-guide-k-rn2ysrk.gamma.site/', en:'https://reflections-room-guide-e-5hc0t54.gamma.site/',  ja:'https://reflections-room-guide-j-o3lwizs.gamma.site/' },
+  rm_rising_sun: { ko:'https://risingsun-room-guide-kr-8fkdwj5.gamma.site/',  en:'https://risingsun-room-guide-en-lmqol69.gamma.site/',   ja:'https://risingsun-room-guide-jp-kneht2l.gamma.site/' },
+  rm_daydream:   { ko:'https://daydream-room-guide-kr-wedlwsf.gamma.site/',    en:'https://daydream-room-guide-en-vj6c4ud.gamma.site/',    ja:'https://daydream-room-guide-jp-r2f0dgv.gamma.site/' },
+  rm_lucid:      { ko:'https://lucid-room-guide-kr-pl018qa.gamma.site/',       en:'https://lucid-room-guide-en-uk9ilfi.gamma.site/',       ja:'https://lucid-room-guide-jp-07eg14u.gamma.site/' },
+  parking:       { ko:'https://parking-information-kr-924yisr.gamma.site/',    en:'https://parking-information-en-vuiscni.gamma.site/',    ja:'https://parking-information-jp-l9tdskr.gamma.site/' },
+  stay_rules:    { ko:'https://stay-rules--tbaftms.gamma.site/',               en:'https://stay-rules-ydam8ex.gamma.site/',               ja:'https://stay-rules-kculc94.gamma.site/' },
+  travel_guide:  { ko:'https://travel-guide-kr-q585gz0.gamma.site/',           en:'https://travel-guide-en-ppcqwo3.gamma.site/',           ja:'https://travel-guide-jp-j4umgv0.gamma.site/' },
+  shiki_story:   { ko:'https://shiki-story-a51q8js.gamma.site/',               en:'https://shiki-story-english-974ycx0.gamma.site/',       ja:'https://shiki-story-qfypmq2.gamma.site/' },
+};
+
+const ROOMS = {
+  reflections: { name:'Reflections', sub:{ ko:'201호 · SHIKI ART HOTEL YUFU 2F', en:'Room 201 · SHIKI ART HOTEL YUFU 2F', ja:'201号室 · SHIKI ART HOTEL YUFU 2F' }, checkin:'checkin_art', checkout:'checkout_art', rmGuide:'rm_reflections' },
+  rising_sun:  { name:'Rising Sun',  sub:{ ko:'301호 · SHIKI ART HOTEL YUFU 3F', en:'Room 301 · SHIKI ART HOTEL YUFU 3F', ja:'301号室 · SHIKI ART HOTEL YUFU 3F' }, checkin:'checkin_art', checkout:'checkout_art', rmGuide:'rm_rising_sun' },
+  daydream:    { name:'Daydream',    sub:{ ko:'Private Villa 101', en:'Private Villa 101', ja:'プライベートヴィラ 101' }, checkin:'checkin_villa', checkout:'checkout_villa', rmGuide:'rm_daydream' },
+  lucid:       { name:'Lucid',       sub:{ ko:'Private Villa 102', en:'Private Villa 102', ja:'プライベートヴィラ 102' }, checkin:'checkin_villa', checkout:'checkout_villa', rmGuide:'rm_lucid' },
+};
+
+const I18N = {
+  ko: {
+    menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'사전 체크인을\n완료하셨나요?',
+    menu_desc:'객실 비밀번호 확인 및 주차 예약은 사전 체크인 완료 후 이용 가능합니다.',
+    btn_guide:'게스트 가이드', btn_checkin:'사전 체크인', back:'뒤로',
+    nav_rooms:'객실 선택', nav_guide:'안내', room_section:'예약하신 객실을 선택해 주세요',
+    lbl_checkin:'체크인 안내', dsc_checkin:'체크인 순서 및 도어록 사용법',
+    lbl_checkout:'체크아웃 안내', dsc_checkout:'체크아웃 순서 및 유의사항',
+    lbl_roomguide:'룸 가이드', dsc_roomguide:'객실 시설 이용 방법',
+    lbl_parking:'주차 및 찾아오시는 길', dsc_parking:'주차장 안내 및 오시는 길',
+    lbl_rules:'숙박 규칙', dsc_rules:'시설 이용 규칙 안내',
+    lbl_travel:'여행 가이드', dsc_travel:'유후인 추천 명소',
+    lbl_story:'Shiki Story', dsc_story:'Shiki의 브랜드 스토리',
+    sec_essential:'필수 안내', sec_stay:'숙박 안내', sec_area:'주변 정보',
+  },
+  en: {
+    menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'Have you completed your\npre check-in?',
+    menu_desc:'Pre check-in is required to receive your room access code and reserve parking.',
+    btn_guide:'Guest Guide', btn_checkin:'Pre Check-in', back:'Back',
+    nav_rooms:'Select Room', nav_guide:'Guide', room_section:'Please select your reserved room',
+    lbl_checkin:'Check-in Guide', dsc_checkin:'Check-in steps & door lock',
+    lbl_checkout:'Check-out Guide', dsc_checkout:'Check-out steps & reminders',
+    lbl_roomguide:'Room Guide', dsc_roomguide:'How to use room facilities',
+    lbl_parking:'Parking & Access', dsc_parking:'Parking info & directions',
+    lbl_rules:'Stay Rules', dsc_rules:'House rules & guidelines',
+    lbl_travel:'Travel Guide', dsc_travel:'Recommended spots in Yufuin',
+    lbl_story:'Shiki Story', dsc_story:'The story behind Shiki',
+    sec_essential:'Essential', sec_stay:'Your Stay', sec_area:'Nearby',
+  },
+  ja: {
+    menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'事前チェックインは\nお済みですか？',
+    menu_desc:'客室パスワードの確認と駐車場のご予約には、事前チェックインが必要です。',
+    btn_guide:'ゲストガイド', btn_checkin:'事前チェックイン', back:'戻る',
+    nav_rooms:'お部屋を選択', nav_guide:'ガイド', room_section:'ご予約のお部屋をお選びください',
+    lbl_checkin:'チェックイン案内', dsc_checkin:'チェックイン手順とドアロックの使い方',
+    lbl_checkout:'チェックアウト案内', dsc_checkout:'チェックアウト手順とご注意事項',
+    lbl_roomguide:'ルームガイド', dsc_roomguide:'客室設備のご利用方法',
+    lbl_parking:'駐車場・アクセス', dsc_parking:'駐車場のご案内とアクセス方法',
+    lbl_rules:'宿泊ルール', dsc_rules:'施設利用に関するルール',
+    lbl_travel:'トラベルガイド', dsc_travel:'由布院のおすすめスポット',
+    lbl_story:'Shiki Story', dsc_story:'Shikiのブランドストーリー',
+    sec_essential:'必須のご案内', sec_stay:'滞在のご案内', sec_area:'周辺情報',
+  },
+};
+
+const SLIDES = [
+  'images/yufuin/slideshow/reflections_01.jpg',
+  'images/yufuin/slideshow/rising_sun_01.jpg',
+  'images/yufuin/slideshow/daydream_01.jpg',
+  'images/yufuin/slideshow/sahy_pv2_ref15.jpg',
+  'images/yufuin/slideshow/reflections_02.jpg',
+  'images/yufuin/slideshow/rising_sun_02.jpg',
+  'images/yufuin/slideshow/daydream_02.jpg',
+  'images/yufuin/slideshow/sahy_pv2_ref64.jpg',
+];
+
+let lang        = 'en';
+let screenStack = ['s-splash'];
+let slideIdx    = 0;
+let slideTimer  = null;
+let currentRoom = null;
+
+function push(id) {
+  const prev=screenStack[screenStack.length-1], prevEl=document.getElementById(prev), nextEl=document.getElementById(id);
+  prevEl.classList.add('exit-left'); nextEl.classList.add('active'); screenStack.push(id);
+  setTimeout(() => prevEl.classList.remove('exit-left'), 420);
+  updateGlobalNav();
+}
+
+function pop() {
+  if (screenStack.length <= 1) return;
+  const curr=screenStack.pop(), prev=screenStack[screenStack.length-1];
+  document.getElementById(curr).classList.remove('active');
+  document.getElementById(prev).classList.remove('exit-left');
+  updateGlobalNav();
+}
+
+function startExperience() {
+  const splash=document.getElementById('s-splash'), menu=document.getElementById('s-menu');
+  menu.style.transition='none'; menu.style.transform='translateX(0)'; menu.style.opacity='0';
+  menu.classList.add('active'); screenStack=['s-menu'];
+  splash.classList.add('exiting');
+  setTimeout(() => { document.getElementById('global-lang-bar').style.display='flex'; menu.style.transition='opacity 0.42s ease-out'; menu.style.opacity='1'; }, 260);
+  setTimeout(() => { splash.classList.remove('active','exiting'); menu.style.transition=''; menu.style.opacity=''; startSlideshow(); }, 720);
+}
+
+function initSlideshow() {
+  const ss=document.getElementById('slideshow'), dots=document.getElementById('slide-dots');
+  SLIDES.forEach((src,i) => {
+    const slide=document.createElement('div'); slide.className='slide'+(i===0?' active':'');
+    const img=document.createElement('img'); img.src=src; img.alt=''; img.loading=i<3?'eager':'lazy';
+    slide.appendChild(img); ss.insertBefore(slide,dots);
+    const dot=document.createElement('div'); dot.className='slide-dot'+(i===0?' active':''); dots.appendChild(dot);
+  });
+}
+
+function startSlideshow() {
+  if (slideTimer) clearInterval(slideTimer);
+  slideTimer = setInterval(nextSlide, 4000);
+}
+
+function nextSlide() {
+  const slides=document.querySelectorAll('.slide'), dotEls=document.querySelectorAll('.slide-dot');
+  slides[slideIdx].classList.remove('active'); dotEls[slideIdx].classList.remove('active');
+  slideIdx=(slideIdx+1)%SLIDES.length;
+  slides[slideIdx].classList.add('active'); dotEls[slideIdx].classList.add('active');
+}
+
+function updateGlobalNav() {
+  const t=I18N[lang];
+  const backBtn=document.getElementById('global-back-btn');
+  const navTitle=document.getElementById('global-nav-title');
+  if (screenStack.length > 1) {
+    backBtn.style.display='flex';
+    document.getElementById('global-back-label').textContent=t.back;
+    navTitle.style.display='none';
+  } else {
+    backBtn.style.display='none';
+    navTitle.style.display='none';
+  }
+}
+
+function setLang(l) {
+  lang=l;
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    const m=b.getAttribute('onclick').match(/'(\w+)'/);
+    if (m) b.classList.toggle('on', m[1]===l);
+  });
+  applyI18N();
+}
+
+function applyI18N() {
+  const i=I18N[lang];
+  document.getElementById('menu-greeting').textContent=i.menu_greeting;
+  document.getElementById('menu-question').textContent=i.menu_question;
+  document.getElementById('menu-desc').textContent=i.menu_desc;
+  document.getElementById('btn-guide').textContent=i.btn_guide;
+  document.getElementById('btn-checkin').textContent=i.btn_checkin;
+  document.getElementById('lbl-back-rooms').textContent=i.back;
+  document.getElementById('lbl-nav-rooms').textContent=i.nav_rooms;
+  document.getElementById('lbl-room-section').textContent=i.room_section;
+  document.getElementById('sub-reflections').textContent=ROOMS.reflections.sub[lang];
+  document.getElementById('sub-rising_sun').textContent=ROOMS.rising_sun.sub[lang];
+  document.getElementById('sub-daydream').textContent=ROOMS.daydream.sub[lang];
+  document.getElementById('sub-lucid').textContent=ROOMS.lucid.sub[lang];
+  document.getElementById('lbl-back-guide').textContent=i.back;
+  document.getElementById('lbl-nav-guide').textContent=i.nav_guide;
+  if (currentRoom) renderGuide(currentRoom);
+  updateGlobalNav();
+}
+
+function selectRoom(roomKey) {
+  currentRoom=roomKey; renderGuide(roomKey); push('s-guide');
+}
+
+function renderGuide(roomKey) {
+  const room=ROOMS[roomKey], i=I18N[lang];
+  document.getElementById('g-room-name').textContent=room.name;
+  document.getElementById('g-room-type').textContent=room.sub[lang];
+  const sections=[
+    { label:i.sec_essential, items:[
+      { key:'lbl_checkin',  dsc:'dsc_checkin',  link:LINKS[room.checkin][lang],  icon:'🔑' },
+      { key:'lbl_parking',  dsc:'dsc_parking',  link:LINKS.parking[lang],        icon:'🚗' },
+      { key:'lbl_checkout', dsc:'dsc_checkout', link:LINKS[room.checkout][lang], icon:'🧳' },
+    ]},
+    { label:i.sec_stay, items:[
+      { key:'lbl_roomguide', dsc:'dsc_roomguide', link:LINKS[room.rmGuide][lang], icon:'🏠' },
+      { key:'lbl_rules',     dsc:'dsc_rules',     link:LINKS.stay_rules[lang],    icon:'📋' },
+    ]},
+    { label:i.sec_area, items:[
+      { key:'lbl_travel', dsc:'dsc_travel', link:LINKS.travel_guide[lang], icon:'🗺' },
+    ]},
+  ];
+  const container=document.getElementById('guide-list');
+  container.innerHTML='';
+  sections.forEach(sec => {
+    const lbl=document.createElement('div'); lbl.className='guide-section-label'; lbl.textContent=sec.label; container.appendChild(lbl);
+    const list=document.createElement('div'); list.className='guide-list';
+    sec.items.forEach(item => {
+      const a=document.createElement('a'); a.className='guide-card'; a.href=item.link; a.target='_blank'; a.rel='noopener';
+      a.innerHTML=`<div class="guide-icon">${item.icon}</div><div class="guide-text"><div class="guide-name">${i[item.key]}</div><div class="guide-desc">${i[item.dsc]}</div></div><div class="guide-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>`;
+      list.appendChild(a);
+    });
+    container.appendChild(list);
+  });
+}
+
+function openCheckin() { window.open(CHECKIN_URL,'_blank','noopener'); }
+
+initSlideshow();
+applyI18N();
+</script>
+</body>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1c2d5b">
+  <title>Shiki — Guest Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:        #1c2d5b;
+      --cream:       #faf2e8;
+      --muted:       #8a8fa8;
+      --safe-top:    env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    html, body {
+      height: 100%;
+      background: var(--navy);
+      font-family: 'DM Sans', 'Noto Sans KR', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      overflow: hidden;
+    }
+    #app { width: 100%; height: 100%; position: relative; overflow: hidden; }
+
+    /* GLOBAL LANG-BAR — sits above all screens, never translated */
+    .lang-bar {
+      position: absolute; top: calc(var(--safe-top) + 16px); left: 50%;
+      transform: translateX(-50%); display: flex; gap: 4px; z-index: 200;
+      background: #856d47; border-radius: 50px; padding: 4px 6px;
+    }
+    #global-lang-bar { display: none; }
+    .lang-btn {
+      padding: 4px 11px; border-radius: 20px; border: none; background: transparent;
+      color: rgba(255,255,255,0.7); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.05em; cursor: pointer; transition: all 0.18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lang-btn.on { background: rgba(255,255,255,0.25); color: #fff; }
+
+    /* SCREENS */
+    .screen {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.38s cubic-bezier(0.32, 0, 0.15, 1);
+      will-change: transform;
+    }
+    .screen.active    { transform: translateX(0); }
+    .screen.exit-left { transform: translateX(-28%); }
+
+    /* SPLASH */
+    #s-splash { transform: translateX(0); background: #faf2e8; flex-direction: column; }
+    .splash-image-clip { flex: 1; overflow: hidden; position: relative; }
+    .splash-image { position: absolute; top: -10%; left: 0; right: 0; bottom: 0; height: calc(100% + 10%); overflow: hidden; will-change: transform; }
+    .splash-image img { width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block; }
+    .splash-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,18,40,0.15) 0%, rgba(10,18,40,0.05) 35%, rgba(10,18,40,0.55) 75%, rgba(10,18,40,0.72) 100%); }
+    .splash-logo-wrap { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; text-align: center; }
+    .splash-logo-wrap img { width: 146px; height: auto; filter: brightness(0) invert(1); }
+    .splash-image-text { position: absolute; bottom: 32px; left: 0; right: 0; z-index: 2; text-align: center; padding: 0 28px; }
+    .splash-image-welcome { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: #ffffff; margin-bottom: 8px; text-shadow: 0 1px 6px rgba(0,0,0,0.6); }
+    .splash-image-sub { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 300; font-style: italic; color: #ffffff; letter-spacing: 0.03em; text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
+    .splash-cta { background: #faf2e8; padding: 30px 32px; padding-bottom: calc(var(--safe-bottom) + 38px); display: flex; flex-direction: column; align-items: center; }
+    .btn-start { font-family: 'DM Sans', sans-serif; background: var(--navy); color: #faf2e8; border: none; border-radius: 50px; padding: 18px 72px; font-size: 12px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 0.1s, opacity 0.1s; }
+    .btn-start:active { transform: scale(0.97); }
+    #s-splash.exiting .splash-image { animation: splashSlideUp 0.65s linear forwards; }
+    #s-splash.exiting .splash-cta   { animation: splashFadeOut 0.25s ease-out forwards; }
+    @keyframes splashSlideUp {
+      0%   { transform: translateY(0);     opacity: 1; animation-timing-function: ease-out; }
+      10%  { transform: translateY(5%);    opacity: 1; animation-timing-function: cubic-bezier(0.55, 0, 1, 1); }
+      100% { transform: translateY(-115%); opacity: 0.4; }
+    }
+    @keyframes splashFadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+    /* MENU */
+    #s-menu { background: #faf2e8; }
+    .slideshow { position: relative; flex-shrink: 0; height: 52vh; overflow: hidden; background: #0d1a38; }
+    .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s ease; }
+    .slide.active { opacity: 1; }
+    .slide img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .slide-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 2; }
+    .slide-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.4); transition: background 0.3s, transform 0.3s; }
+    .slide-dot.active { background: #fff; transform: scale(1.3); }
+    .menu-body { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 28px 24px; padding-bottom: calc(var(--safe-bottom) + 32px); gap: 12px; }
+    .menu-greeting { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(10,18,40,0.45); margin-bottom: 2px; line-height: 1.4; }
+    .menu-question { font-size: 20px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin-bottom: 6px; white-space: pre-line; line-height: 1.35; }
+    .menu-desc { font-size: 13px; font-weight: 400; color: rgba(10,18,40,0.55); line-height: 1.55; margin-bottom: 8px; }
+    .btn-primary { width: 100%; padding: 16px 24px; border-radius: 14px; border: none; background: #1c2d5b; color: #ffffff; font-size: 14px; font-weight: 700; letter-spacing: 0.06em; line-height: 1.2; font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 0.1s, opacity 0.15s; }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-secondary { width: 100%; padding: 16px 24px; border-radius: 14px; border: none; background: #1c2d5b; color: #ffffff; font-size: 14px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.2; font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 0.1s; }
+    .btn-secondary:active { transform: scale(0.98); }
+
+    /* ROOMS */
+    #s-rooms { background: #faf2e8; }
+    .nav-bar { position: relative; display: flex; align-items: center; justify-content: center; padding: calc(var(--safe-top) + 56px) 20px 14px; flex-shrink: 0; }
+    .back-btn { position: absolute; top: calc(var(--safe-top) + 14px); left: 16px; display: flex; align-items: center; gap: 4px; background: none; border: none; color: var(--navy); font-size: 14px; font-weight: 500; cursor: pointer; padding: 6px 8px 6px 2px; -webkit-tap-highlight-color: transparent; opacity: 0.7; }
+    .back-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    #global-back-btn { position: absolute; top: calc(var(--safe-top) + 14px); left: 16px; z-index: 150; display: none; }
+    #global-nav-title { position: absolute; top: calc(var(--safe-top) + 14px); left: 0; right: 0; z-index: 150; pointer-events: none; display: none; height: 42px; line-height: 42px; }
+    .screen .back-btn, .screen .nav-title { display: none !important; }
+    .nav-title { font-size: 16px; font-weight: 600; color: var(--navy); letter-spacing: 0.02em; text-align: center; }
+    .scroll-area { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 20px; padding-bottom: calc(var(--safe-bottom) + 24px); }
+    .section-room-title { font-size: 22px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin: 20px 0 6px; line-height: 1.3; text-transform: uppercase; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; color: var(--muted); margin: 0 0 24px; line-height: 1.4; }
+    .room-list { display: flex; flex-direction: column; gap: 10px; }
+    .room-card { background: #fff; border-radius: 16px; padding: 20px 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 0.1s, background 0.12s; box-shadow: 0 1px 4px rgba(28,45,91,0.06); }
+    .room-card:active { transform: scale(0.98); background: #f5f5f5; }
+    .room-name { font-size: 17px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; line-height: 1.3; }
+    .room-sub { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+    .chevron { color: rgba(28,45,91,0.35); flex-shrink: 0; }
+
+    /* GUIDE */
+    #s-guide { background: #faf2e8; }
+    .guide-header { padding: 8px 24px 20px; border-bottom: 1px solid rgba(28,45,91,0.08); flex-shrink: 0; }
     .guide-room-name { font-size: 22px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin: 20px 0 4px; }
     .guide-room-type { font-size: 12px; color: var(--muted); margin: 0 0 4px; }
     .guide-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 20px 0 10px; }
