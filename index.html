@@ -195,17 +195,21 @@
     .lang-bar {
       position: absolute;
       top: calc(var(--safe-top) + 16px);
-      right: 18px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      gap: 5px;
+      gap: 4px;
       z-index: 50;
+      background: #856d47;
+      border-radius: 50px;
+      padding: 4px 6px;
     }
     .lang-btn {
-      padding: 5px 12px;
+      padding: 4px 11px;
       border-radius: 20px;
-      border: 1.5px solid rgba(255,255,255,0.3);
+      border: none;
       background: transparent;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.7);
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.05em;
@@ -214,18 +218,15 @@
       -webkit-tap-highlight-color: transparent;
     }
     .lang-btn.on {
-      background: rgba(255,255,255,0.18);
-      border-color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.25);
       color: #fff;
     }
-    /* On light screens */
+    /* On light screens — same brown bar style */
     .screen.light-bg .lang-bar .lang-btn {
-      border-color: rgba(28,45,91,0.25);
-      color: rgba(28,45,91,0.5);
+      color: rgba(255,255,255,0.7);
     }
     .screen.light-bg .lang-bar .lang-btn.on {
-      background: var(--navy);
-      border-color: var(--navy);
+      background: rgba(255,255,255,0.25);
       color: #fff;
     }
 
@@ -308,8 +309,8 @@
       padding: 16px 24px;
       border-radius: 14px;
       border: none;
-      background: var(--cream);
-      color: var(--navy);
+      background: #1c2d5b;
+      color: #ffffff;
       font-size: 14px;
       font-weight: 700;
       letter-spacing: 0.06em;
@@ -320,11 +321,11 @@
     .btn-primary:active { transform: scale(0.98); }
     .btn-secondary {
       width: 100%;
-      padding: 15px 24px;
+      padding: 16px 24px;
       border-radius: 14px;
-      border: 1.5px solid rgba(10,18,40,0.25);
-      background: transparent;
-      color: var(--navy);
+      border: none;
+      background: #1c2d5b;
+      color: #ffffff;
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 0.06em;
@@ -334,7 +335,7 @@
     }
     .btn-secondary:active { transform: scale(0.98); }
 
-    /* ═══════════════════════════════════════
+    /* ════════════════════════════════════════
        SCREEN 3 — ROOM LIST
     ════════════════════════════════════════ */
     #s-rooms {
@@ -536,9 +537,9 @@
   <div id="s-menu" class="screen">
 
     <div class="lang-bar">
-      <button class="lang-btn on" onclick="setLang('ko')">KR</button>
       <button class="lang-btn"    onclick="setLang('en')">EN</button>
       <button class="lang-btn"    onclick="setLang('ja')">JP</button>
+      <button class="lang-btn on" onclick="setLang('ko')">KR</button>
     </div>
 
     <div class="slideshow" id="slideshow">
@@ -546,10 +547,10 @@
     </div>
 
     <div class="menu-body">
-      <div class="menu-greeting" id="menu-greeting">Shiki Art Hotel &amp; Private Villa Yufuin</div>
-      <div class="menu-question" id="menu-question">무엇을 도와드릴까요?</div>
-      <button class="btn-primary"   id="btn-guide"   onclick="push('s-rooms')"></button>
-      <button class="btn-secondary" id="btn-checkin" onclick="openCheckin()"></button>
+      <div class="menu-greeting" id="menu-greeting">SHIKI ART HOTEL YUFU</div>
+      <div class="menu-question" id="menu-question">체크인 전 사전 체크인을 완료해 주세요</div>
+      <button class="btn-primary"   id="btn-checkin" onclick="openCheckin()"></button>
+      <button class="btn-secondary" id="btn-guide"   onclick="push('s-rooms')"></button>
     </div>
   </div>
 
@@ -557,9 +558,9 @@
   <div id="s-rooms" class="screen light-bg">
 
     <div class="lang-bar">
-      <button class="lang-btn on" onclick="setLang('ko')">KR</button>
       <button class="lang-btn"    onclick="setLang('en')">EN</button>
       <button class="lang-btn"    onclick="setLang('ja')">JP</button>
+      <button class="lang-btn on" onclick="setLang('ko')">KR</button>
     </div>
 
     <div class="nav-bar">
@@ -637,9 +638,9 @@
   <div id="s-guide" class="screen light-bg">
 
     <div class="lang-bar">
-      <button class="lang-btn on" onclick="setLang('ko')">KR</button>
       <button class="lang-btn"    onclick="setLang('en')">EN</button>
       <button class="lang-btn"    onclick="setLang('ja')">JP</button>
+      <button class="lang-btn on" onclick="setLang('ko')">KR</button>
     </div>
 
     <div class="nav-bar">
@@ -700,7 +701,7 @@ const ROOMS = {
   },
   daydream: {
     name: 'Daydream',
-    sub:  { ko:'Private Villa 101 · shiki private villa yufuin', en:'Private Villa 101 · shiki private villa yufuin', ja:'プライベートヴィラ 101 · shiki private villa yufuin' },
+    sub:  { ko:'Private Villa 101 · shiki private villa yufuin', en:'Private Villa 101 · shiki private villa yufuin', ja:'プラアベートヴィラ 101 · shiki private villa yufuin' },
     checkin: 'checkin_villa', checkout: 'checkout_villa', rmGuide: 'rm_daydream',
   },
   lucid: {
@@ -713,8 +714,8 @@ const ROOMS = {
 const I18N = {
   ko: {
     splash_sub:    'A place to feel art.',
-    menu_greeting: 'Shiki Art Hotel & Private Villa Yufuin',
-    menu_question: '무엇을 도와드릴까요?',
+    menu_greeting: 'SHIKI ART HOTEL YUFU',
+    menu_question: '체크인 전 사전 체크인을 완료해 주세요',
     btn_guide:     '안내 보기',
     btn_checkin:   '사전체크인 하기',
     back:          '뒤로',
@@ -733,8 +734,8 @@ const I18N = {
   },
   en: {
     splash_sub:    'A place to feel art.',
-    menu_greeting: 'Shiki Art Hotel & Private Villa Yufuin',
-    menu_question: 'How can we help you?',
+    menu_greeting: 'SHIKI ART HOTEL YUFU',
+    menu_question: 'Please complete your pre check-in before arrival',
     btn_guide:     'View Guest Guide',
     btn_checkin:   'Pre Check-in',
     back:          'Back',
@@ -753,8 +754,8 @@ const I18N = {
   },
   ja: {
     splash_sub:    'A place to feel art.',
-    menu_greeting: 'Shiki Art Hotel & Private Villa Yufuin',
-    menu_question: 'ご用件はいかがでしょうか？',
+    menu_greeting: 'SHIKI ART HOTEL YUFU',
+    menu_question: '事前チェックインをお済ませください',
     btn_guide:     'ゲストガイドを見る',
     btn_checkin:   '事前チェックイン',
     back:          '戻る',
@@ -764,9 +765,9 @@ const I18N = {
     lbl_checkin:   'チェックインガイド',   dsc_checkin:   'チェックイン手順とドアロック',
     lbl_checkout:  'チェックアウトガイド', dsc_checkout:  'チェックアウト手順と注意事項',
     lbl_roomguide: 'ルームガイド',         dsc_roomguide: '室内設備のご利用方法',
-    lbl_parking:   '駐車場・アクセス',     dsc_parking:   '駐車場情報とアクセス方法',
-    lbl_rules:     '宿泊ルール',           dsc_rules:     '施設利用規則のご案内',
-    lbl_travel:    '旅行ガイド',           dsc_travel:    '由布院のおすすめスポット',
+    lbl_parking:   '駐車場・アクセス',     dsc_parking:   '駐車場情報とアクセスf��法',
+    lbl_rules:     '宿泊ルール',           dsc_rules:     '施�h�利用規則のご案内',
+    lbl_travel:    '旅行ガイド',           dsc_travel:    '由布院のおそそめスポット',
     lbl_story:     'Shiki Story',          dsc_story:     'shikiのブランドストーリー',
     sec_room:      'お部屋のご案内',
     sec_common:    '共通のご案内',
@@ -980,7 +981,6 @@ function renderGuide(roomKey) {
     });
     html += '</div>';
   });
-
   document.getElementById('guide-list').innerHTML = html;
 }
 
@@ -993,9 +993,9 @@ function openCheckin() {
 
 /* ══════════════════════════════════════════
    INIT
-══════════════════════════════════════════ */
+⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐ */
 initSlideshow();
 applyI18N();
 </script>
 </body>
-</html>
+  </html>
