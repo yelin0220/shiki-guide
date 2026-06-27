@@ -50,7 +50,7 @@
     .screen.active    { transform: translateX(0); }
     .screen.exit-left { transform: translateX(-28%); }
 
-    /* ═══════════════════════════════════════
+    /* ════════════════════════════════════════
        SCREEN 1 — SPLASH
     ════════════════════════════════════════ */
     #s-splash {
@@ -298,11 +298,18 @@
       margin-bottom: 2px;
     }
     .menu-question {
-      font-size: 18px;
-      font-weight: 300;
+      font-size: 20px;
+      font-weight: 600;
       color: var(--navy);
-      letter-spacing: 0.03em;
-      margin-bottom: 12px;
+      letter-spacing: 0.01em;
+      margin-bottom: 6px;
+    }
+    .menu-desc {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(10,18,40,0.55);
+      line-height: 1.55;
+      margin-bottom: 8px;
     }
     .btn-primary {
       width: 100%;
@@ -548,7 +555,8 @@
 
     <div class="menu-body">
       <div class="menu-greeting" id="menu-greeting">SHIKI ART HOTEL YUFU</div>
-      <div class="menu-question" id="menu-question">체크인 전 사전 체크인을 완료해 주세요</div>
+      <div class="menu-question" id="menu-question">사전체크인을 완료하셨나요?</div>
+      <div class="menu-desc" id="menu-desc">사전체크인을 완료하셔야 객실입장용 패스워드 확인과 주차장 예약이 가능하십니다.</div>
       <button class="btn-primary"   id="btn-checkin" onclick="openCheckin()"></button>
       <button class="btn-secondary" id="btn-guide"   onclick="push('s-rooms')"></button>
     </div>
@@ -701,7 +709,7 @@ const ROOMS = {
   },
   daydream: {
     name: 'Daydream',
-    sub:  { ko:'Private Villa 101 · shiki private villa yufuin', en:'Private Villa 101 · shiki private villa yufuin', ja:'プラアベートヴィラ 101 · shiki private villa yufuin' },
+    sub:  { ko:'Private Villa 101 · shiki private villa yufuin', en:'Private Villa 101 · shiki private villa yufuin', ja:'プライベートヴィラ 101 · shiki private villa yufuin' },
     checkin: 'checkin_villa', checkout: 'checkout_villa', rmGuide: 'rm_daydream',
   },
   lucid: {
@@ -715,7 +723,8 @@ const I18N = {
   ko: {
     splash_sub:    'A place to feel art.',
     menu_greeting: 'SHIKI ART HOTEL YUFU',
-    menu_question: '체크인 전 사전 체크인을 완료해 주세요',
+    menu_question: '사전체크인을 완료하셨나요?',
+    menu_desc:     '사전체크인을 완료하셔야 객실입장용 패스워드 확인과 주차장 예약이 가능하십니다.',
     btn_guide:     '안내 보기',
     btn_checkin:   '사전체크인 하기',
     back:          '뒤로',
@@ -735,7 +744,8 @@ const I18N = {
   en: {
     splash_sub:    'A place to feel art.',
     menu_greeting: 'SHIKI ART HOTEL YUFU',
-    menu_question: 'Please complete your pre check-in before arrival',
+    menu_question: 'Have you completed your pre check-in?',
+    menu_desc:     'Pre check-in is required to receive your room access password and make a parking reservation.',
     btn_guide:     'View Guest Guide',
     btn_checkin:   'Pre Check-in',
     back:          'Back',
@@ -755,7 +765,8 @@ const I18N = {
   ja: {
     splash_sub:    'A place to feel art.',
     menu_greeting: 'SHIKI ART HOTEL YUFU',
-    menu_question: '事前チェックインをお済ませください',
+    menu_question: '事前チェックインはお済みです？',
+    menu_desc:     '事前チェックインを完了されますと、客室入室用パスワードの確認と駐車場のご予約が可能になります。',
     btn_guide:     'ゲストガイドを見る',
     btn_checkin:   '事前チェックイン',
     back:          '戻る',
@@ -765,9 +776,9 @@ const I18N = {
     lbl_checkin:   'チェックインガイド',   dsc_checkin:   'チェックイン手順とドアロック',
     lbl_checkout:  'チェックアウトガイド', dsc_checkout:  'チェックアウト手順と注意事項',
     lbl_roomguide: 'ルームガイド',         dsc_roomguide: '室内設備のご利用方法',
-    lbl_parking:   '駐車場・アクセス',     dsc_parking:   '駐車場情報とアクセスf��法',
+    lbl_parking:   '駐車場・アクセス',     dsc_parking:   '駐車場情報とアクセス方法',
     lbl_rules:     '宿泊ルール',           dsc_rules:     '施�h�利用規則のご案内',
-    lbl_travel:    '旅行ガイド',           dsc_travel:    '由布院のおそそめスポット',
+    lbl_travel:    '旅行ガイド',           dsc_travel:    '由布院のおす＊スポット',
     lbl_story:     'Shiki Story',          dsc_story:     'shikiのブランドストーリー',
     sec_room:      'お部屋のご案内',
     sec_common:    '共通のご案内',
@@ -907,6 +918,7 @@ function applyI18N() {
 
   document.getElementById('menu-greeting').textContent = i.menu_greeting;
   document.getElementById('menu-question').textContent = i.menu_question;
+  document.getElementById('menu-desc').textContent    = i.menu_desc;
   document.getElementById('btn-guide').textContent     = i.btn_guide;
   document.getElementById('btn-checkin').textContent   = i.btn_checkin;
 
@@ -952,48 +964,57 @@ function renderGuide(roomKey) {
     {
       label: i.sec_common,
       items: [
-        { key: 'lbl_rules',   dsc: 'dsc_rules',   link: LINKS.stay_rules[lang],   icon: '📋' },
-        { key: 'lbl_story',   dsc: 'dsc_story',   link: LINKS.shiki_story[lang],  icon: '✨' },
-        { key: 'lbl_travel',  dsc: 'dsc_travel',  link: LINKS.travel_guide[lang], icon: '🗺️' },
-        { key: 'lbl_parking', dsc: 'dsc_parking', link: LINKS.parking[lang],      icon: '🚗' },
+        { key: 'lbl_parking',   dsc: 'dsc_parking',   link: LINKS.parking[lang],         icon: '🏎' },
+        { key: 'lbl_rules',     dsc: 'dsc_rules',     link: LINKS.stay_rules[lang],      icon: '📾' },
+        { key: 'lbl_travel',    dsc: 'dsc_travel',    link: LINKS.travel_guide[lang],    icon: '🔍' },
+        { key: 'lbl_story',     dsc: 'dsc_story',     link: LINKS.shiki_story[lang],      icon: '💼' },
       ]
-    }
+    },
   ];
 
-  let html = '';
+  const container = document.getElementById('guide-list');
+  container.innerHTML = '';
+
   sections.forEach(sec => {
-    html += `<div class="guide-section-label">${sec.label}</div><div class="guide-list">`;
+    const label = document.createElement('div');
+    label.className = 'guide-section-label';
+    label.textContent = sec.label;
+    container.appendChild(label);
+
+    const list = document.createElement('div');
+    list.className = 'guide-list';
+
     sec.items.forEach(item => {
-      html += `
-        <a class="guide-card" href="${item.link}" target="_blank" rel="noopener">
-          <div class="guide-icon">${item.icon}</div>
-          <div class="guide-text">
-            <div class="guide-name">${i[item.key]}</div>
-            <div class="guide-desc">${i[item.dsc]}</div>
-          </div>
-          <div class="guide-arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"/>
-            </svg>
-          </div>
-        </a>`;
+      const a = document.createElement('a');
+      a.className = 'guide-card';
+      a.href = item.link;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.innerHTML = `
+        <div class="guide-icon">${item.icon}</div>
+        <div class="guide-text">
+          <div class="guide-name">${i[litem.key]}</div>
+          <div class="guide-desc">${i[item.dsc]}</div>
+        </div>
+        <div class="guide-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </div>
+      `;
+      list.appendChild(a);
     });
-    html += '</div>';
+
+    container.appendChild(list);
   });
-  document.getElementById('guide-list').innerHTML = html;
 }
 
-/* ══════════════════════════════════════════
-   CHECK-IN
-══════════════════════════════════════════ */
 function openCheckin() {
-  window.open(CHECKIN_URL, '_blank');
+  window.open(CHECKIN_URL, '_blank', 'noopener');
 }
 
-/* ══════════════════════════════════════════
-   INIT
-⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐⍐ */
+// Init
 initSlideshow();
 applyI18N();
 </script>
