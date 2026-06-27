@@ -117,8 +117,8 @@
     /* GUIDE */
     #s-guide { background: #faf2e8; }
     .guide-header { padding: 8px 24px 20px; border-bottom: 1px solid rgba(28,45,91,0.08); flex-shrink: 0; }
-    .guide-room-name { font-size: 22px; font-weight: 300; color: var(--navy); letter-spacing: 0.04em; }
-    .guide-room-type { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .guide-room-name { font-size: 22px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin: 20px 0 4px; }
+    .guide-room-type { font-size: 12px; color: var(--muted); margin: 0 0 4px; }
     .guide-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 20px 0 10px; }
     .guide-list { display: flex; flex-direction: column; gap: 8px; }
     .guide-card { background: #fff; border-radius: 14px; padding: 16px 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; text-decoration: none; -webkit-tap-highlight-color: transparent; transition: transform 0.1s, background 0.12s; box-shadow: 0 1px 3px rgba(28,45,91,0.05); }
@@ -222,11 +222,9 @@
       </button>
       <div class="nav-title" id="lbl-nav-guide"></div>
     </div>
-    <div class="guide-header">
+    <div class="scroll-area">
       <div class="guide-room-name" id="g-room-name"></div>
       <div class="guide-room-type" id="g-room-type"></div>
-    </div>
-    <div class="scroll-area">
       <div id="guide-list"></div>
     </div>
   </div>
@@ -271,7 +269,7 @@ const I18N = {
     lbl_rules:'숙박 규칙', dsc_rules:'시설 이용 규칙 안내',
     lbl_travel:'여행 가이드', dsc_travel:'유후인 추천 명소',
     lbl_story:'Shiki Story', dsc_story:'Shiki의 브랜드 스토리',
-    sec_room:'객실 안내', sec_common:'공통 안내',
+    sec_essential:'필수 안내', sec_stay:'숙박 안내', sec_area:'주변 정보',
   },
   en: {
     menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'Have you completed your\npre check-in?',
@@ -285,7 +283,7 @@ const I18N = {
     lbl_rules:'Stay Rules', dsc_rules:'House rules & guidelines',
     lbl_travel:'Travel Guide', dsc_travel:'Recommended spots in Yufuin',
     lbl_story:'Shiki Story', dsc_story:'The story behind Shiki',
-    sec_room:'Room Info', sec_common:'General Info',
+    sec_essential:'Essential', sec_stay:'Your Stay', sec_area:'Nearby',
   },
   ja: {
     menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'事前チェックインは\nお済みですか？',
@@ -299,7 +297,7 @@ const I18N = {
     lbl_rules:'宿泊ルール', dsc_rules:'施設利用に関するルール',
     lbl_travel:'トラベルガイド', dsc_travel:'由布院のおすすめスポット',
     lbl_story:'Shiki Story', dsc_story:'Shikiのブランドストーリー',
-    sec_room:'お部屋のご案内', sec_common:'共通のご案内',
+    sec_essential:'必須のご案内', sec_stay:'滞在のご案内', sec_area:'周辺情報',
   },
 };
 
@@ -370,12 +368,10 @@ function updateGlobalNav() {
   const t=I18N[lang];
   const backBtn=document.getElementById('global-back-btn');
   const navTitle=document.getElementById('global-nav-title');
-  const current=screenStack[screenStack.length-1];
   if (screenStack.length > 1) {
     backBtn.style.display='flex';
     document.getElementById('global-back-label').textContent=t.back;
-    if (current==='s-guide') { navTitle.style.display='block'; navTitle.textContent=t.nav_guide; }
-    else { navTitle.style.display='none'; }
+    navTitle.style.display='none';
   } else {
     backBtn.style.display='none';
     navTitle.style.display='none';
@@ -420,16 +416,17 @@ function renderGuide(roomKey) {
   document.getElementById('g-room-name').textContent=room.name;
   document.getElementById('g-room-type').textContent=room.sub[lang];
   const sections=[
-    { label:i.sec_room, items:[
-      { key:'lbl_checkin',   dsc:'dsc_checkin',   link:LINKS[room.checkin][lang],  icon:'🔑' },
-      { key:'lbl_checkout',  dsc:'dsc_checkout',  link:LINKS[room.checkout][lang], icon:'🧳' },
-      { key:'lbl_roomguide', dsc:'dsc_roomguide', link:LINKS[room.rmGuide][lang],  icon:'🏠' },
+    { label:i.sec_essential, items:[
+      { key:'lbl_checkin',  dsc:'dsc_checkin',  link:LINKS[room.checkin][lang],  icon:'🔑' },
+      { key:'lbl_parking',  dsc:'dsc_parking',  link:LINKS.parking[lang],        icon:'🚗' },
+      { key:'lbl_checkout', dsc:'dsc_checkout', link:LINKS[room.checkout][lang], icon:'🧳' },
     ]},
-    { label:i.sec_common, items:[
-      { key:'lbl_parking', dsc:'dsc_parking', link:LINKS.parking[lang],      icon:'🚗' },
-      { key:'lbl_rules',   dsc:'dsc_rules',   link:LINKS.stay_rules[lang],   icon:'📋' },
-      { key:'lbl_travel',  dsc:'dsc_travel',  link:LINKS.travel_guide[lang], icon:'🗺' },
-      { key:'lbl_story',   dsc:'dsc_story',   link:LINKS.shiki_story[lang],  icon:'✨' },
+    { label:i.sec_stay, items:[
+      { key:'lbl_roomguide', dsc:'dsc_roomguide', link:LINKS[room.rmGuide][lang], icon:'🏠' },
+      { key:'lbl_rules',     dsc:'dsc_rules',     link:LINKS.stay_rules[lang],    icon:'📋' },
+    ]},
+    { label:i.sec_area, items:[
+      { key:'lbl_travel', dsc:'dsc_travel', link:LINKS.travel_guide[lang], icon:'🗺' },
     ]},
   ];
   const container=document.getElementById('guide-list');
