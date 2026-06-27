@@ -57,7 +57,7 @@
     /* SPLASH */
     #s-splash { transform: translateX(0); background: #faf2e8; flex-direction: column; }
     .splash-image-clip { flex: 1; overflow: hidden; position: relative; }
-    .splash-image { position: absolute; inset: 0; overflow: hidden; will-change: transform; }
+    .splash-image { position: absolute; top: -10%; left: 0; right: 0; bottom: 0; height: calc(100% + 10%); overflow: hidden; will-change: transform; }
     .splash-image img { width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block; }
     .splash-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,18,40,0.15) 0%, rgba(10,18,40,0.05) 35%, rgba(10,18,40,0.55) 75%, rgba(10,18,40,0.72) 100%); }
     .splash-logo-wrap { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; text-align: center; }
