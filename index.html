@@ -327,8 +327,7 @@ function startExperience() {
   menu.style.transition='none'; menu.style.transform='translateX(0)'; menu.style.opacity='0';
   menu.classList.add('active'); screenStack=['s-menu'];
   splash.classList.add('exiting');
-  document.getElementById('global-lang-bar').style.display='flex';
-  setTimeout(() => { menu.style.transition='opacity 0.42s ease-out'; menu.style.opacity='1'; }, 260);
+  setTimeout(() => { document.getElementById('global-lang-bar').style.display='flex'; menu.style.transition='opacity 0.42s ease-out'; menu.style.opacity='1'; }, 260);
   setTimeout(() => { splash.classList.remove('active','exiting'); menu.style.transition=''; menu.style.opacity=''; startSlideshow(); }, 720);
 }
 
