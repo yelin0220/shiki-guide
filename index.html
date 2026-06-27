@@ -88,7 +88,7 @@
     .slide-dot.active { background: #fff; transform: scale(1.3); }
     .menu-body { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 28px 24px; padding-bottom: calc(var(--safe-bottom) + 32px); gap: 12px; }
     .menu-greeting { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(10,18,40,0.45); margin-bottom: 2px; }
-    .menu-question { font-size: 20px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin-bottom: 6px; }
+    .menu-question { font-size: 20px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin-bottom: 6px; white-space: pre-line; }
     .menu-desc { font-size: 13px; font-weight: 400; color: rgba(10,18,40,0.55); line-height: 1.55; margin-bottom: 8px; }
     .btn-primary { width: 100%; padding: 16px 24px; border-radius: 14px; border: none; background: #1c2d5b; color: #ffffff; font-size: 14px; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 0.1s, opacity 0.15s; }
     .btn-primary:active { transform: scale(0.98); }
@@ -249,45 +249,45 @@ const ROOMS = {
 
 const I18N = {
   ko: {
-    menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'사전체크인을 완료하셨나요?',
-    menu_desc:'사전체크인을 완료하셔야 객실입장용 패스워드 확인과 주차장 예약이 가능하십니다.',
-    btn_guide:'안내 보기', btn_checkin:'사전체크인 하기', back:'뒤로',
-    nav_rooms:'객실 선택', nav_guide:'안내', room_section:'숙박하시는 객실을 선택해주세요',
-    lbl_checkin:'체크인 안내', dsc_checkin:'체크인 절차 및 도어록 안내',
-    lbl_checkout:'체크아웃 안내', dsc_checkout:'체크아웃 절차 및 주의사항',
-    lbl_roomguide:'룸 가이드', dsc_roomguide:'시설 이용 방법 안내',
-    lbl_parking:'주차장 안내', dsc_parking:'주차 및 찾아오시는 길',
-    lbl_rules:'숙박 룰', dsc_rules:'시설 이용 규칙 안내',
-    lbl_travel:'여행 가이드', dsc_travel:'유후인 추천 명소 안내',
-    lbl_story:'Shiki Story', dsc_story:'shiki의 브랜드 스토리',
+    menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'사전 체크인을\n완료하셨나요?',
+    menu_desc:'객실 비밀번호 확인 및 주차 예약은 사전 체크인 완료 후 이용 가능합니다.',
+    btn_guide:'게스트 가이드', btn_checkin:'사전 체크인', back:'뒤로',
+    nav_rooms:'객실 선택', nav_guide:'안내', room_section:'이용하실 객실을 선택해 주세요',
+    lbl_checkin:'체크인 안내', dsc_checkin:'체크인 순서 및 도어록 사용법',
+    lbl_checkout:'체크아웃 안내', dsc_checkout:'체크아웃 순서 및 유의사항',
+    lbl_roomguide:'룸 가이드', dsc_roomguide:'객실 시설 이용 방법',
+    lbl_parking:'주차 및 찾아오시는 길', dsc_parking:'주차장 안내 및 오시는 길',
+    lbl_rules:'숙박 규칙', dsc_rules:'시설 이용 규칙 안내',
+    lbl_travel:'여행 가이드', dsc_travel:'유후인 추천 명소',
+    lbl_story:'Shiki Story', dsc_story:'Shiki의 브랜드 스토리',
     sec_room:'객실 안내', sec_common:'공통 안내',
   },
   en: {
-    menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'Have you completed your pre check-in?',
-    menu_desc:'Pre check-in is required to receive your room access password and make a parking reservation.',
-    btn_guide:'View Guest Guide', btn_checkin:'Pre Check-in', back:'Back',
+    menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'Have you completed your\npre check-in?',
+    menu_desc:'Pre check-in is required to receive your room access code and reserve parking.',
+    btn_guide:'Guest Guide', btn_checkin:'Pre Check-in', back:'Back',
     nav_rooms:'Select Room', nav_guide:'Guide', room_section:'Please select your room',
-    lbl_checkin:'Check-in Guide', dsc_checkin:'Check-in procedure & door lock',
-    lbl_checkout:'Check-out Guide', dsc_checkout:'Check-out procedure & notes',
+    lbl_checkin:'Check-in Guide', dsc_checkin:'Check-in steps & door lock',
+    lbl_checkout:'Check-out Guide', dsc_checkout:'Check-out steps & reminders',
     lbl_roomguide:'Room Guide', dsc_roomguide:'How to use room facilities',
     lbl_parking:'Parking & Access', dsc_parking:'Parking info & directions',
-    lbl_rules:'Stay Rules', dsc_rules:'Facility usage rules',
+    lbl_rules:'Stay Rules', dsc_rules:'House rules & guidelines',
     lbl_travel:'Travel Guide', dsc_travel:'Recommended spots in Yufuin',
-    lbl_story:'Shiki Story', dsc_story:'The story behind shiki',
+    lbl_story:'Shiki Story', dsc_story:'The story behind Shiki',
     sec_room:'Room Info', sec_common:'General Info',
   },
   ja: {
-    menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'事前チェックインはお済みですか？',
-    menu_desc:'事前チェックインを完了されますと、客室入室用パスワードの確認と駐車場のご予約が可能になります。',
-    btn_guide:'ゲストガイドを見る', btn_checkin:'事前チェックイン', back:'戻る',
-    nav_rooms:'お部屋を選択', nav_guide:'ガイド', room_section:'ご宿泊のお部屋をお選びください',
-    lbl_checkin:'チェックインガイド', dsc_checkin:'チェックイン手順とドアロック',
-    lbl_checkout:'チェックアウトガイド', dsc_checkout:'チェックアウト手順と注意事項',
-    lbl_roomguide:'ルームガイド', dsc_roomguide:'室内設備のご利用方法',
-    lbl_parking:'駐車場・アクセス', dsc_parking:'駐車場情報とアクセス方法',
-    lbl_rules:'宿泊ルール', dsc_rules:'施設利用規則のご案内',
-    lbl_travel:'旅行ガイド', dsc_travel:'由布院のおすすめスポット',
-    lbl_story:'Shiki Story', dsc_story:'shikiのブランドストーリー',
+    menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'事前チェックインは\nお済みですか？',
+    menu_desc:'客室パスワードの確認と駐車場のご予約には、事前チェックインが必要です。',
+    btn_guide:'ゲストガイド', btn_checkin:'事前チェックイン', back:'戻る',
+    nav_rooms:'お部屋を選択', nav_guide:'ガイド', room_section:'ご利用のお部屋をお選びください',
+    lbl_checkin:'チェックイン案内', dsc_checkin:'チェックイン手順とドアロックの使い方',
+    lbl_checkout:'チェックアウト案内', dsc_checkout:'チェックアウト手順とご注意事項',
+    lbl_roomguide:'ルームガイド', dsc_roomguide:'客室設備のご利用方法',
+    lbl_parking:'駐車場・アクセス', dsc_parking:'駐車場のご案内とアクセス方法',
+    lbl_rules:'宿泊ルール', dsc_rules:'施設利用に関するルール',
+    lbl_travel:'トラベルガイド', dsc_travel:'由布院のおすすめスポット',
+    lbl_story:'Shiki Story', dsc_story:'Shikiのブランドストーリー',
     sec_room:'お部屋のご案内', sec_common:'共通のご案内',
   },
 };
