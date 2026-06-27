@@ -50,12 +50,12 @@
     .screen.active    { transform: translateX(0); }
     .screen.exit-left { transform: translateX(-28%); }
 
-    /* ════════════════════════════════════════
+    /* ═══════════════════════════════════════
        SCREEN 1 — SPLASH
     ════════════════════════════════════════ */
     #s-splash {
       transform: translateX(0);
-      background: var(--navy);
+      background: #faf2e8;
       flex-direction: column;
     }
 
@@ -177,7 +177,7 @@
       animation: splashSlideUp 0.65s linear forwards;
     }
     #s-splash.exiting .splash-cta {
-      animation: splashFadeOut 0.28s ease-out 0.14s forwards;
+      animation: splashFadeOut 0.25s ease-out forwards;
     }
     @keyframes splashSlideUp {
       0%   { transform: translateY(0);     opacity: 1; animation-timing-function: ease-out; }
@@ -334,7 +334,7 @@
     }
     .btn-secondary:active { transform: scale(0.98); }
 
-    /* ════════════════════════════════════════
+    /* ═══════════════════════════════════════
        SCREEN 3 — ROOM LIST
     ════════════════════════════════════════ */
     #s-rooms {
@@ -769,7 +769,7 @@ const I18N = {
     lbl_travel:    '旅行ガイド',           dsc_travel:    '由布院のおすすめスポット',
     lbl_story:     'Shiki Story',          dsc_story:     'shikiのブランドストーリー',
     sec_room:      'お部屋のご案内',
-    sec_common:    '共通のご案내',
+    sec_common:    '共通のご案内',
   },
 };
 
@@ -824,18 +824,31 @@ function pop() {
 ══════════════════════════════════════════ */
 function startExperience() {
   const splash = document.getElementById('s-splash');
+  const menu   = document.getElementById('s-menu');
+
+  // Pre-position menu in place but invisible
+  menu.style.transition = 'none';
+  menu.style.transform  = 'translateX(0)';
+  menu.style.opacity    = '0';
+  menu.classList.add('active');
+  screenStack = ['s-menu'];
+
+  // Trigger splash exit (image rolls up, CTA fades)
   splash.classList.add('exiting');
 
+  // Fade menu in after CTA has faded out
+  setTimeout(() => {
+    menu.style.transition = 'opacity 0.42s ease-out';
+    menu.style.opacity    = '1';
+  }, 260);
+
+  // Cleanup splash
   setTimeout(() => {
     splash.classList.remove('active', 'exiting');
-    const menu = document.getElementById('s-menu');
-    menu.style.transition = 'none';
-    menu.style.transform  = 'translateX(0)';
-    menu.classList.add('active');
-    screenStack = ['s-menu'];
-    requestAnimationFrame(() => { menu.style.transition = ''; });
+    menu.style.transition = '';
+    menu.style.opacity    = '';
     startSlideshow();
-  }, 620);
+  }, 720);
 }
 
 /* ══════════════════════════════════════════
