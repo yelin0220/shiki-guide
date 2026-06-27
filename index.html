@@ -238,6 +238,16 @@
     </div>
   </div>
 
+
+  <!-- SCREEN 5: BEPPU -->
+  <div id="s-beppu" class="screen" style="background:#faf2e8;align-items:center;justify-content:center;">
+    <div style="text-align:center;padding:56px 40px;">
+      <div style="width:72px;height:72px;margin:0 auto 28px;background:#1c2d5b;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:32px;color:#faf2e8;font-weight:300;">色</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#8a8fa8;margin-bottom:14px;">Shiki · Beppu</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:#1c2d5b;letter-spacing:0.06em;margin-bottom:22px;">Coming Soon</div>
+      <div style="font-size:13px;color:#8a8fa8;line-height:1.9;">別府の案内は準備中です<br>벳푸 안내 페이지 준비 중입니다</div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -913,7 +923,15 @@ function renderGuide(roomKey) {
 
 function openCheckin() { window.open(CHECKIN_URL,'_blank','noopener'); }
 
-initSlideshow();
-applyI18N();
+(function() {
+  var b = (new URLSearchParams(location.search).get('branch') || 'yufuin').toLowerCase();
+  if (b === 'beppu') {
+    document.getElementById('s-splash').style.display = 'none';
+    document.getElementById('s-beppu').classList.add('active');
+  } else {
+    initSlideshow();
+    applyI18N();
+  }
+})();
 </script>
 </body>
