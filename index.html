@@ -63,12 +63,12 @@
     .splash-logo-wrap { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; text-align: center; }
     .splash-logo-wrap img { width: 146px; height: auto; filter: brightness(0) invert(1); }
     .splash-image-text { position: absolute; bottom: 32px; left: 0; right: 0; z-index: 2; text-align: center; padding: 0 28px; }
-    .splash-image-welcome { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 8px; }
-    .splash-image-sub { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 300; font-style: italic; color: rgba(255,255,255,0.68); letter-spacing: 0.03em; }
+    .splash-image-welcome { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: #ffffff; margin-bottom: 8px; text-shadow: 0 1px 6px rgba(0,0,0,0.6); }
+    .splash-image-sub { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 300; font-style: italic; color: #ffffff; letter-spacing: 0.03em; text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
     .splash-cta { background: #faf2e8; padding: 30px 32px; padding-bottom: calc(var(--safe-bottom) + 38px); display: flex; flex-direction: column; align-items: center; }
     .btn-start { font-family: 'DM Sans', sans-serif; background: var(--navy); color: #faf2e8; border: none; border-radius: 50px; padding: 18px 72px; font-size: 12px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 0.1s, opacity 0.1s; }
     .btn-start:active { transform: scale(0.97); }
-    #s-splash.exiting .splash-image { animation: splashSlideUp 0.65s linear forwards; }
+    #s-splash.exiting .splash-image { animation: splashSlieUp 0.65s linear forwards; }
     #s-splash.exiting .splash-cta   { animation: splashFadeOut 0.25s ease-out forwards; }
     @keyframes splashSlideUp {
       0%   { transform: translateY(0);     opacity: 1; animation-timing-function: ease-out; }
@@ -240,8 +240,8 @@ const LINKS = {
 };
 
 const ROOMS = {
-  reflections: { name:'Reflections', sub:{ ko:'201호 · shiki art hotel yufuin', en:'Room 201 · shiki art hotel yufuin', ja:'201号室 · shiki art hotel yufuin' }, checkin:'checkin_art', checkout:'checkout_art', rmGuide:'rm_reflections' },
-  rising_sun:  { name:'Rising Sun',  sub:{ ko:'301호 · shiki art hotel yufuin', en:'Room 301 · shiki art hotel yufuin', ja:'301号室 · shiki art hotel yufuin' }, checkin:'checkin_art', checkout:'checkout_art', rmGuide:'rm_rising_sun' },
+  reflections: { name:'Reflections', sub:{ ko:'201호 · shiki art hotel yufuin', en:'Room 201 · shiki art hotel yufuin', ja:'201号室 · Shiki art hotel yufuin' }, checkin:'checkin_art', checkout:'checkout_art', rmGuide:'rm_reflections' },
+  rising_sun:  { name:'Rising Sun',  sub:{ ko:'301호 · shiki art hotel yufuin', en:'Room 301 · shiki art hotel yufuin', ja:'301号室 · Shiki art hotel yufuin' }, checkin:'checkin_art', checkout:'checkout_art', rmGuide:'rm_rising_sun' },
   daydream:    { name:'Daydream',    sub:{ ko:'Private Villa 101 · shiki private villa yufuin', en:'Private Villa 101 · shiki private villa yufuin', ja:'プライベートヴィラ 101 · shiki private villa yufuin' }, checkin:'checkin_villa', checkout:'checkout_villa', rmGuide:'rm_daydream' },
   lucid:       { name:'Lucid',       sub:{ ko:'Private Villa 102 · shiki private villa yufuin', en:'Private Villa 102 · shiki private villa yufuin', ja:'プライベートヴィラ 102 · shiki private villa yufuin' }, checkin:'checkin_villa', checkout:'checkout_villa', rmGuide:'rm_lucid' },
 };
@@ -276,18 +276,18 @@ const I18N = {
     sec_room:'Room Info', sec_common:'General Info',
   },
   ja: {
-    menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'宋蕍チェックインはお済みですか？',
-    menu_desc:'宋蕍チェックインを完了されますと、客室入室用パスワードの確認と駐車場のご予約が可能になります。',
-    btn_guide:'ゲストガイドを見る', btn_checkin:'事前チェックイン', back:'戻る',
+    menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'事前チェックインはお済みですか？',
+    menu_desc:'事前チェックインを完了されますと、客室入室用パスワードの確認と駐車場のご予約が可能になります。',
+    btn_guide:'ゲストガイドを見る', btn_checkin:'��e��チェックイン', back:'戻る',
     nav_rooms:'お部屋を選択', nav_guide:'ガイド', room_section:'ご宿泊のお部屋をお選びください',
     lbl_checkin:'チェックインガイド', dsc_checkin:'チェックイン手順とドアロック',
     lbl_checkout:'チェックアウトガイド', dsc_checkout:'チェックアウト手順と注意事項',
-    lbl_roomguide:'ルームガイド', dsc_roomguide:'室内設備のご利用方法',
+    lbl_roomguide:'ルームガイド', dsc_roomguide:'室内設備のあ利用方法',
     lbl_parking:'駐車場・アクセス', dsc_parking:'駐車場情報とアクセス方法',
-    lbl_rules:'宿泊ルール', dsc_rules:'施�h�利用規則のご案内',
-    lbl_travel:'旅行ガイド', dsc_travel:'由布院のおすひめspots',
+    lbl_rules:'宿泊ルール', dsc_rules:'施設利用規則のご案内',
+    lbl_travel:'旅行ガイド', dsc_travel:'由布院のおすすめスポット',
     lbl_story:'Shiki Story', dsc_story:'shikiのブランドストーリー',
-    sec_room:'お部屋のご栈内', sec_common:'共通のご栈内',
+    sec_room:'お部屋のご案内', sec_common:'共通のご案内',
   },
 };
 
@@ -327,8 +327,7 @@ function startExperience() {
   menu.classList.add('active'); screenStack=['s-menu'];
   splash.classList.add('exiting');
   document.getElementById('global-lang-bar').style.display='flex';
-  setTimeout(() => { menu.style.transition='opacity 0.42s ease-out'; menu.style.opacity='1'; }, 
-'; }, 260);
+  setTimeout(() => { menu.style.transition='opcity 0.42s ease-out'; menu.style.opacity='1'; }, 260);
   setTimeout(() => { splash.classList.remove('active','exiting'); menu.style.transition=''; menu.style.opacity=''; startSlideshow(); }, 720);
 }
 
@@ -410,7 +409,7 @@ function renderGuide(roomKey) {
     const list=document.createElement('div'); list.className='guide-list';
     sec.items.forEach(item => {
       const a=document.createElement('a'); a.className='guide-card'; a.href=item.link; a.target='_blank'; a.rel='noopener';
-      a.innerHTML<`<div class="guide-icon">${item.icon}</div><div class="guide-text"><div class="guide-name">${i[item.key]}</div><div class="guide-desc">${i[item.dsc]}</div></div><div class="guide-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>`;
+      a.innerHTML=`<div class="guide-icon">${item.icon}</div><div class="guide-text"><div class="guide-name">${i[item.key]}</div><div class="guide-desc">${i[item.dsc]}</div></div><div class="guide-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>`;
       list.appendChild(a);
     });
     container.appendChild(list);
