@@ -49,12 +49,16 @@
     .screen.active    { transform: translateX(0); }
     .screen.exit-left { transform: translateX(-28%); }
 
+    /* ════════════════════════════════════════
+       SCREEN 1 — SPLASH
+    ════════════════════════════════════════ */
     #s-splash {
       transform: translateX(0);
       background: var(--navy);
       flex-direction: column;
     }
 
+    /* Hero image — top portion */
     .splash-image {
       position: relative;
       flex: 1;
@@ -65,67 +69,77 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 30%;
+      object-position: center 55%;
       display: block;
+      transform: scale(1.08);
+      transform-origin: center;
     }
     .splash-image::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(10, 18, 40, 0.42);
+      background: linear-gradient(
+        to bottom,
+        rgba(10,18,40,0.15) 0%,
+        rgba(10,18,40,0.05) 35%,
+        rgba(10,18,40,0.55) 75%,
+        rgba(10,18,40,0.72) 100%
+      );
     }
+    /* Logo overlay on image */
     .splash-logo-wrap {
       position: absolute;
-      top: 50%;
+      top: 42%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 2;
       text-align: center;
     }
     .splash-logo-wrap img {
-      width: 72px;
+      width: 108px;
       height: auto;
       filter: brightness(0) invert(1);
     }
 
+    /* Text overlay at bottom of image */
+    .splash-image-text {
+      position: absolute;
+      bottom: 32px;
+      left: 0; right: 0;
+      z-index: 2;
+      text-align: center;
+      padding: 0 28px;
+    }
+    .splash-image-welcome {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 5px;
+    }
+    .splash-image-sub {
+      font-size: 12.5px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.62);
+      letter-spacing: 0.04em;
+    }
+
+    /* Bottom CTA area */
     .splash-cta {
-      background: var(--navy);
-      padding: 36px 32px;
-      padding-bottom: calc(var(--safe-bottom) + 44px);
+      background: #faf2e8;
+      padding: 30px 32px;
+      padding-bottom: calc(var(--safe-bottom) + 38px);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
-      text-align: center;
-    }
-    .splash-welcome {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
-      margin-bottom: 2px;
-    }
-    .splash-title {
-      font-size: 26px;
-      font-weight: 300;
-      letter-spacing: 0.08em;
-      color: #fff;
-      margin-bottom: 4px;
-    }
-    .splash-sub {
-      font-size: 13px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.55);
-      letter-spacing: 0.05em;
-      margin-bottom: 28px;
     }
     .btn-start {
-      background: var(--cream);
-      color: var(--navy);
+      background: var(--navy);
+      color: #faf2e8;
       border: none;
       border-radius: 50px;
-      padding: 16px 56px;
+      padding: 18px 72px;
       font-size: 13px;
       font-weight: 700;
       letter-spacing: 0.18em;
@@ -136,6 +150,7 @@
     }
     .btn-start:active { transform: scale(0.97); }
 
+    /* Splash exit animations */
     #s-splash.exiting .splash-image {
       animation: splashSlideUp 0.55s cubic-bezier(0.42, 0, 0.58, 1) forwards;
     }
@@ -151,6 +166,9 @@
       to   { opacity: 0; }
     }
 
+    /* ════════════════════════════════════════
+       PERSISTENT LANG BAR
+    ════════════════════════════════════════ */
     .lang-bar {
       position: absolute;
       top: calc(var(--safe-top) + 16px);
@@ -177,6 +195,7 @@
       border-color: rgba(255,255,255,0.7);
       color: #fff;
     }
+    /* On light screens */
     .screen.light-bg .lang-bar .lang-btn {
       border-color: rgba(28,45,91,0.25);
       color: rgba(28,45,91,0.5);
@@ -187,8 +206,14 @@
       color: #fff;
     }
 
-    #s-menu { background: var(--navy); }
+    /* ════════════════════════════════════════
+       SCREEN 2 — MENU (Yufuin Main)
+    ════════════════════════════════════════ */
+    #s-menu {
+      background: var(--navy);
+    }
 
+    /* Slideshow */
     .slideshow {
       position: relative;
       flex-shrink: 0;
@@ -230,6 +255,7 @@
       transform: scale(1.3);
     }
 
+    /* Menu body */
     .menu-body {
       flex: 1;
       display: flex;
@@ -285,7 +311,12 @@
     }
     .btn-secondary:active { transform: scale(0.98); }
 
-    #s-rooms { background: var(--cream); }
+    /* ════════════════════════════════════════
+       SCREEN 3 — ROOM LIST
+    ════════════════════════════════════════ */
+    #s-rooms {
+      background: var(--cream);
+    }
 
     .nav-bar {
       display: flex;
@@ -308,7 +339,11 @@
       -webkit-tap-highlight-color: transparent;
       opacity: 0.7;
     }
-    .back-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .back-btn svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
     .nav-title {
       font-size: 16px;
       font-weight: 600;
@@ -336,7 +371,11 @@
       margin: 12px 0 14px;
     }
 
-    .room-list { display: flex; flex-direction: column; gap: 10px; }
+    .room-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
     .room-card {
       background: #fff;
       border-radius: 16px;
@@ -350,19 +389,45 @@
       box-shadow: 0 1px 4px rgba(28,45,91,0.06);
     }
     .room-card:active { transform: scale(0.98); background: #f5f5f5; }
-    .room-name { font-size: 17px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; }
-    .room-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
-    .chevron { color: rgba(28,45,91,0.35); flex-shrink: 0; }
+    .room-name {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: 0.01em;
+    }
+    .room-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .chevron {
+      color: rgba(28,45,91,0.35);
+      flex-shrink: 0;
+    }
 
-    #s-guide { background: var(--cream); }
+    /* ════════════════════════════════════════
+       SCREEN 4 — GUIDE LINKS
+    ════════════════════════════════════════ */
+    #s-guide {
+      background: var(--cream);
+    }
 
     .guide-header {
       padding: 8px 24px 20px;
       border-bottom: 1px solid rgba(28,45,91,0.08);
       flex-shrink: 0;
     }
-    .guide-room-name { font-size: 22px; font-weight: 300; color: var(--navy); letter-spacing: 0.04em; }
-    .guide-room-type { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .guide-room-name {
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--navy);
+      letter-spacing: 0.04em;
+    }
+    .guide-room-type {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
 
     .guide-section-label {
       font-size: 10px;
@@ -372,7 +437,11 @@
       color: var(--muted);
       margin: 20px 0 10px;
     }
-    .guide-list { display: flex; flex-direction: column; gap: 8px; }
+    .guide-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
     .guide-card {
       background: #fff;
       border-radius: 14px;
@@ -388,45 +457,69 @@
     }
     .guide-card:active { transform: scale(0.98); background: #f5f5f5; }
     .guide-icon {
-      width: 40px; height: 40px;
+      width: 40px;
+      height: 40px;
       border-radius: 11px;
       background: var(--navy);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
     }
     .guide-text { flex: 1; }
-    .guide-name { font-size: 14px; font-weight: 600; color: var(--navy); }
-    .guide-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
-    .guide-arrow { color: rgba(28,45,91,0.3); flex-shrink: 0; }
+    .guide-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .guide-desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .guide-arrow {
+      color: rgba(28,45,91,0.3);
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
 <div id="app">
 
+  <!-- ═══ SCREEN 1: SPLASH ═══════════════════════════════ -->
   <div id="s-splash" class="screen active">
+
     <div class="splash-image" id="splash-img">
       <img src="images/main_image.jpg" alt="Shiki">
       <div class="splash-logo-wrap">
         <img src="logo/Logo_2.png" alt="Shiki">
       </div>
+      <div class="splash-image-text">
+        <div class="splash-image-welcome">Welcome to Shiki</div>
+        <div class="splash-image-sub">A place to discover a new lifestyle</div>
+      </div>
     </div>
+
     <div class="splash-cta" id="splash-cta">
-      <div class="splash-welcome">Welcome to</div>
-      <div class="splash-title">Shiki</div>
-      <div class="splash-sub" id="splash-sub-text">A place to feel art.</div>
       <button class="btn-start" id="btn-start" onclick="startExperience()">START</button>
     </div>
+
   </div>
 
+  <!-- ═══ SCREEN 2: YUFUIN MENU ═══════════════════════════ -->
   <div id="s-menu" class="screen">
+
     <div class="lang-bar">
       <button class="lang-btn on" onclick="setLang('ko')">KR</button>
       <button class="lang-btn"    onclick="setLang('en')">EN</button>
       <button class="lang-btn"    onclick="setLang('ja')">JP</button>
     </div>
+
     <div class="slideshow" id="slideshow">
       <div class="slide-dots" id="slide-dots"></div>
     </div>
+
     <div class="menu-body">
       <div class="menu-greeting" id="menu-greeting">Shiki Art Hotel &amp; Private Villa Yufuin</div>
       <div class="menu-question" id="menu-question">무엇을 도와드릴까요?</div>
@@ -435,79 +528,123 @@
     </div>
   </div>
 
+  <!-- ═══ SCREEN 3: ROOM LIST ══════════════════════════════ -->
   <div id="s-rooms" class="screen light-bg">
+
     <div class="lang-bar">
       <button class="lang-btn on" onclick="setLang('ko')">KR</button>
       <button class="lang-btn"    onclick="setLang('en')">EN</button>
       <button class="lang-btn"    onclick="setLang('ja')">JP</button>
     </div>
+
     <div class="nav-bar">
       <button class="back-btn" onclick="pop()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
         <span id="lbl-back-rooms"></span>
       </button>
       <div class="nav-title" id="lbl-nav-rooms"></div>
     </div>
+
     <div class="scroll-area">
       <div class="section-label" id="lbl-room-section"></div>
       <div class="room-list">
+
         <div class="room-card" onclick="selectRoom('reflections')">
           <div class="room-info">
             <div class="room-name">Reflections</div>
             <div class="room-sub" id="sub-reflections"></div>
           </div>
-          <div class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
         </div>
+
         <div class="room-card" onclick="selectRoom('rising_sun')">
           <div class="room-info">
             <div class="room-name">Rising Sun</div>
             <div class="room-sub" id="sub-rising_sun"></div>
           </div>
-          <div class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
         </div>
+
         <div class="room-card" onclick="selectRoom('daydream')">
           <div class="room-info">
             <div class="room-name">Daydream</div>
             <div class="room-sub" id="sub-daydream"></div>
           </div>
-          <div class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
         </div>
+
         <div class="room-card" onclick="selectRoom('lucid')">
           <div class="room-info">
             <div class="room-name">Lucid</div>
             <div class="room-sub" id="sub-lucid"></div>
           </div>
-          <div class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
 
+  <!-- ═══ SCREEN 4: GUIDE LINKS ════════════════════════════ -->
   <div id="s-guide" class="screen light-bg">
+
     <div class="lang-bar">
       <button class="lang-btn on" onclick="setLang('ko')">KR</button>
       <button class="lang-btn"    onclick="setLang('en')">EN</button>
       <button class="lang-btn"    onclick="setLang('ja')">JP</button>
     </div>
+
     <div class="nav-bar">
       <button class="back-btn" onclick="pop()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
         <span id="lbl-back-guide"></span>
       </button>
       <div class="nav-title" id="lbl-nav-guide"></div>
     </div>
+
     <div class="guide-header">
       <div class="guide-room-name" id="g-room-name"></div>
       <div class="guide-room-type" id="g-room-type"></div>
     </div>
+
     <div class="scroll-area">
       <div id="guide-list"></div>
     </div>
+
   </div>
 
-</div>
+</div><!-- #app -->
 
 <script>
+/* ══════════════════════════════════════════
+   DATA
+══════════════════════════════════════════ */
 const CHECKIN_URL = 'https://checkin.hotelshiki.com/en/checkin';
 
 const LINKS = {
@@ -526,36 +663,85 @@ const LINKS = {
 };
 
 const ROOMS = {
-  reflections: { name:'Reflections', sub:{ko:'201호 · shiki art hotel yufuin',en:'Room 201 · shiki art hotel yufuin',ja:'201号室 · shiki art hotel yufuin'}, checkin:'checkin_art',checkout:'checkout_art',rmGuide:'rm_reflections' },
-  rising_sun:  { name:'Rising Sun',  sub:{ko:'301호 · shiki art hotel yufuin',en:'Room 301 · shiki art hotel yufuin',ja:'301号室 · shiki art hotel yufuin'}, checkin:'checkin_art',checkout:'checkout_art',rmGuide:'rm_rising_sun' },
-  daydream:    { name:'Daydream',    sub:{ko:'Private Villa 101 · shiki private villa yufuin',en:'Private Villa 101 · shiki private villa yufuin',ja:'プライベートヴィラ 101 · shiki private villa yufuin'}, checkin:'checkin_villa',checkout:'checkout_villa',rmGuide:'rm_daydream' },
-  lucid:       { name:'Lucid',       sub:{ko:'Private Villa 102 · shiki private villa yufuin',en:'Private Villa 102 · shiki private villa yufuin',ja:'プライベートヴィラ 102 · shiki private villa yufuin'}, checkin:'checkin_villa',checkout:'checkout_villa',rmGuide:'rm_lucid' },
+  reflections: {
+    name: 'Reflections',
+    sub:  { ko:'201호 · shiki art hotel yufuin', en:'Room 201 · shiki art hotel yufuin', ja:'201号室 · shiki art hotel yufuin' },
+    checkin: 'checkin_art', checkout: 'checkout_art', rmGuide: 'rm_reflections',
+  },
+  rising_sun: {
+    name: 'Rising Sun',
+    sub:  { ko:'301호 · shiki art hotel yufuin', en:'Room 301 · shiki art hotel yufuin', ja:'301号室 · shiki art hotel yufuin' },
+    checkin: 'checkin_art', checkout: 'checkout_art', rmGuide: 'rm_rising_sun',
+  },
+  daydream: {
+    name: 'Daydream',
+    sub:  { ko:'Private Villa 101 · shiki private villa yufuin', en:'Private Villa 101 · shiki private villa yufuin', ja:'プライベートヴィラ 101 · shiki private villa yufuin' },
+    checkin: 'checkin_villa', checkout: 'checkout_villa', rmGuide: 'rm_daydream',
+  },
+  lucid: {
+    name: 'Lucid',
+    sub:  { ko:'Private Villa 102 · shiki private villa yufuin', en:'Private Villa 102 · shiki private villa yufuin', ja:'プライベートヴィラ 102 · shiki private villa yufuin' },
+    checkin: 'checkin_villa', checkout: 'checkout_villa', rmGuide: 'rm_lucid',
+  },
 };
 
 const I18N = {
   ko: {
-    splash_sub:'A place to feel art.',menu_greeting:'Shiki Art Hotel & Private Villa Yufuin',menu_question:'무엇을 도와드릴까요?',
-    btn_guide:'안내 보기',btn_checkin:'사전체크인 하기',back:'뒤로',nav_rooms:'객실 선택',nav_guide:'안내',room_section:'숙박하시는 객실을 선택해주세요',
-    lbl_checkin:'체크인 안내',dsc_checkin:'체크인 절차 및 도어록 안내',lbl_checkout:'체크아웃 안내',dsc_checkout:'체크아웃 절차 및 주의사항',
-    lbl_roomguide:'룸 가이드',dsc_roomguide:'시설 이용 방법 안내',lbl_parking:'주차장 안내',dsc_parking:'주차 및 찾아오시는 길',
-    lbl_rules:'숙박 룰',dsc_rules:'시설 이용 규칙 안내',lbl_travel:'여행 가이드',dsc_travel:'유후인 추천 명소 안내',
-    lbl_story:'Shiki Story',dsc_story:'shiki의 브랜드 스토리',sec_room:'객실 안내',sec_common:'공통 안내',
+    menu_greeting: 'Shiki Art Hotel & Private Villa Yufuin',
+    menu_question: '무엇을 도와드릴까요?',
+    btn_guide:     '안내 보기',
+    btn_checkin:   '사전체크인 하기',
+    back:          '뒤로',
+    nav_rooms:     '객실 선택',
+    nav_guide:     '안내',
+    room_section:  '숙박하시는 객실을 선택해주세요',
+    lbl_checkin:   '체크인 안내',   dsc_checkin:   '체크인 절차 및 도어록 안내',
+    lbl_checkout:  '체크아웃 안내', dsc_checkout:  '체크아웃 절차 및 주의사항',
+    lbl_roomguide: '룸 가이드',     dsc_roomguide: '시설 이용 방법 안내',
+    lbl_parking:   '주차장 안내',   dsc_parking:   '주차 및 찾아오시는 길',
+    lbl_rules:     '숙박 룰',       dsc_rules:     '시설 이용 규칙 안내',
+    lbl_travel:    '여행 가이드',   dsc_travel:    '유후인 추천 명소 안내',
+    lbl_story:     'Shiki Story',   dsc_story:     'shiki의 브랜드 스토리',
+    sec_room:      '객실 안내',
+    sec_common:    '공통 안내',
   },
   en: {
-    splash_sub:'A place to feel art.',menu_greeting:'Shiki Art Hotel & Private Villa Yufuin',menu_question:'How can we help you?',
-    btn_guide:'View Guest Guide',btn_checkin:'Pre Check-in',back:'Back',nav_rooms:'Select Room',nav_guide:'Guide',room_section:'Please select your room',
-    lbl_checkin:'Check-in Guide',dsc_checkin:'Check-in procedure & door lock',lbl_checkout:'Check-out Guide',dsc_checkout:'Check-out procedure & notes',
-    lbl_roomguide:'Room Guide',dsc_roomguide:'How to use room facilities',lbl_parking:'Parking & Access',dsc_parking:'Parking info & directions',
-    lbl_rules:'Stay Rules',dsc_rules:'Facility usage rules',lbl_travel:'Travel Guide',dsc_travel:'Recommended spots in Yufuin',
-    lbl_story:'Shiki Story',dsc_story:'The story behind shiki',sec_room:'Room Info',sec_common:'General Info',
+    menu_greeting: 'Shiki Art Hotel & Private Villa Yufuin',
+    menu_question: 'How can we help you?',
+    btn_guide:     'View Guest Guide',
+    btn_checkin:   'Pre Check-in',
+    back:          'Back',
+    nav_rooms:     'Select Room',
+    nav_guide:     'Guide',
+    room_section:  'Please select your room',
+    lbl_checkin:   'Check-in Guide',    dsc_checkin:   'Check-in procedure & door lock',
+    lbl_checkout:  'Check-out Guide',   dsc_checkout:  'Check-out procedure & notes',
+    lbl_roomguide: 'Room Guide',        dsc_roomguide: 'How to use room facilities',
+    lbl_parking:   'Parking & Access',  dsc_parking:   'Parking info & directions',
+    lbl_rules:     'Stay Rules',        dsc_rules:     'Facility usage rules',
+    lbl_travel:    'Travel Guide',      dsc_travel:    'Recommended spots in Yufuin',
+    lbl_story:     'Shiki Story',       dsc_story:     'The story behind shiki',
+    sec_room:      'Room Info',
+    sec_common:    'General Info',
   },
   ja: {
-    splash_sub:'A place to feel art.',menu_greeting:'Shiki Art Hotel & Private Villa Yufuin',menu_question:'ご用件はいかがでしょうか？',
-    btn_guide:'ゲストガイドを見る',btn_checkin:'事前チェックイン',back:'戻る',nav_rooms:'お部屋を選択',nav_guide:'ガイド',room_section:'ご宿泊のお部屋をお選びください',
-    lbl_checkin:'チェックインガイド',dsc_checkin:'チェックイン手順とドアロック',lbl_checkout:'チェックアウトガイド',dsc_checkout:'チェックアウト手順と注意事項',
-    lbl_roomguide:'ルームガイド',dsc_roomguide:'室内設備のご利用方法',lbl_parking:'駐車場・アクセス',dsc_parking:'駐車場情報とアクセス方法',
-    lbl_rules:'宿泊ルール',dsc_rules:'施設利用規則のご案内',lbl_travel:'旅行ガイド',dsc_travel:'由布院のおすすめスポット',
-    lbl_story:'Shiki Story',dsc_story:'shikiのブランドストーリー',sec_room:'お部屋のご案内',sec_common:'共通のご案内',
+    menu_greeting: 'Shiki Art Hotel & Private Villa Yufuin',
+    menu_question: 'ご用件はいかがでしょうか？',
+    btn_guide:     'ゲストガイドを見る',
+    btn_checkin:   '事前チェックイン',
+    back:          '戻る',
+    nav_rooms:     'お部屋を選択',
+    nav_guide:     'ガイド',
+    room_section:  'ご宿泊のお部屋をお選びください',
+    lbl_checkin:   'チェックインガイド',   dsc_checkin:   'チェックイン手順とドアロック',
+    lbl_checkout:  'チェックアウトガイド', dsc_checkout:  'チェックアウト手順と注意事項',
+    lbl_roomguide: 'ルームガイド',         dsc_roomguide: '室内設備のご利用方法',
+    lbl_parking:   '駐車場・アクセス',     dsc_parking:   '駐車場情報とアクセス方法',
+    lbl_rules:     '宿泊ルール',           dsc_rules:     '施設利用規則のご案内',
+    lbl_travel:    '旅行ガイド',           dsc_travel:    '由布院のおすすめスポット',
+    lbl_story:     'Shiki Story',          dsc_story:     'shikiのブランドストーリー',
+    sec_room:      'お部屋のご案内',
+    sec_common:    '共通のご案内',
   },
 };
 
@@ -570,126 +756,203 @@ const SLIDES = [
   'images/yufuin/lucid/sahy-pv_2_ref-32.jpg',
 ];
 
-let lang='ko', screenStack=['s-splash'], slideIdx=0, slideTimer=null, currentRoom=null;
+/* ══════════════════════════════════════════
+   STATE
+══════════════════════════════════════════ */
+let lang        = 'ko';
+let screenStack = ['s-splash'];
+let slideIdx    = 0;
+let slideTimer  = null;
+let currentRoom = null;
 
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
 function push(id) {
-  const prev=screenStack[screenStack.length-1];
-  document.getElementById(prev).classList.add('exit-left');
-  document.getElementById(id).classList.add('active');
+  const prev   = screenStack[screenStack.length - 1];
+  const prevEl = document.getElementById(prev);
+  const nextEl = document.getElementById(id);
+
+  prevEl.classList.add('exit-left');
+  nextEl.classList.add('active');
   screenStack.push(id);
-  setTimeout(()=>document.getElementById(prev).classList.remove('exit-left'),420);
+
+  setTimeout(() => prevEl.classList.remove('exit-left'), 420);
 }
 
 function pop() {
-  if(screenStack.length<=1)return;
-  const curr=screenStack.pop(), prev=screenStack[screenStack.length-1];
-  document.getElementById(curr).classList.remove('active');
-  document.getElementById(prev).classList.remove('exit-left');
+  if (screenStack.length <= 1) return;
+  const curr   = screenStack.pop();
+  const prev   = screenStack[screenStack.length - 1];
+  const currEl = document.getElementById(curr);
+  const prevEl = document.getElementById(prev);
+
+  currEl.classList.remove('active');
+  prevEl.classList.remove('exit-left');
 }
 
+/* ══════════════════════════════════════════
+   SPLASH TRANSITION
+══════════════════════════════════════════ */
 function startExperience() {
-  const splash=document.getElementById('s-splash');
+  const splash = document.getElementById('s-splash');
   splash.classList.add('exiting');
-  setTimeout(()=>{
-    splash.classList.remove('active','exiting');
-    const menu=document.getElementById('s-menu');
-    menu.style.transition='none';
-    menu.style.transform='translateX(0)';
+
+  setTimeout(() => {
+    splash.classList.remove('active', 'exiting');
+    const menu = document.getElementById('s-menu');
+    menu.style.transition = 'none';
+    menu.style.transform  = 'translateX(0)';
     menu.classList.add('active');
-    screenStack=['s-menu'];
-    requestAnimationFrame(()=>{menu.style.transition='';});
+    screenStack = ['s-menu'];
+    requestAnimationFrame(() => { menu.style.transition = ''; });
     startSlideshow();
-  },620);
+  }, 620);
 }
 
+/* ══════════════════════════════════════════
+   SLIDESHOW
+══════════════════════════════════════════ */
 function initSlideshow() {
-  const ss=document.getElementById('slideshow'), dots=document.getElementById('slide-dots');
-  SLIDES.forEach((src,i)=>{
-    const slide=document.createElement('div');
-    slide.className='slide'+(i===0?' active':'');
-    const img=document.createElement('img');
-    img.src=src; img.alt=''; img.loading=i<3?'eager':'lazy';
-    slide.appendChild(img); ss.insertBefore(slide,dots);
-    const dot=document.createElement('div');
-    dot.className='slide-dot'+(i===0?' active':'');
+  const ss   = document.getElementById('slideshow');
+  const dots = document.getElementById('slide-dots');
+
+  SLIDES.forEach((src, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'slide' + (i === 0 ? ' active' : '');
+    const img = document.createElement('img');
+    img.src     = src;
+    img.alt     = '';
+    img.loading = i < 3 ? 'eager' : 'lazy';
+    slide.appendChild(img);
+    ss.insertBefore(slide, dots);
+
+    const dot = document.createElement('div');
+    dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
     dots.appendChild(dot);
   });
 }
 
 function startSlideshow() {
-  if(slideTimer)clearInterval(slideTimer);
-  slideTimer=setInterval(nextSlide,4000);
+  if (slideTimer) clearInterval(slideTimer);
+  slideTimer = setInterval(nextSlide, 4000);
 }
 
 function nextSlide() {
-  const slides=document.querySelectorAll('.slide'), dotEls=document.querySelectorAll('.slide-dot');
-  slides[slideIdx].classList.remove('active'); dotEls[slideIdx].classList.remove('active');
-  slideIdx=(slideIdx+1)%SLIDES.length;
-  slides[slideIdx].classList.add('active'); dotEls[slideIdx].classList.add('active');
+  const slides = document.querySelectorAll('.slide');
+  const dotEls = document.querySelectorAll('.slide-dot');
+  slides[slideIdx].classList.remove('active');
+  dotEls[slideIdx].classList.remove('active');
+  slideIdx = (slideIdx + 1) % SLIDES.length;
+  slides[slideIdx].classList.add('active');
+  dotEls[slideIdx].classList.add('active');
 }
 
+/* ══════════════════════════════════════════
+   LANGUAGE
+══════════════════════════════════════════ */
 function setLang(l) {
-  lang=l;
-  document.querySelectorAll('.lang-btn').forEach(b=>{
-    const m=b.getAttribute('onclick').match(/'(\w+)'/);
-    if(m)b.classList.toggle('on',m[1]===l);
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    const m = b.getAttribute('onclick').match(/'(\w+)'/);
+    if (m) b.classList.toggle('on', m[1] === l);
   });
   applyI18N();
 }
 
 function applyI18N() {
-  const i=I18N[lang];
-  document.getElementById('splash-sub-text').textContent=i.splash_sub;
-  document.getElementById('menu-greeting').textContent=i.menu_greeting;
-  document.getElementById('menu-question').textContent=i.menu_question;
-  document.getElementById('btn-guide').textContent=i.btn_guide;
-  document.getElementById('btn-checkin').textContent=i.btn_checkin;
-  document.getElementById('lbl-back-rooms').textContent=i.back;
-  document.getElementById('lbl-nav-rooms').textContent=i.nav_rooms;
-  document.getElementById('lbl-room-section').textContent=i.room_section;
-  document.getElementById('sub-reflections').textContent=ROOMS.reflections.sub[lang];
-  document.getElementById('sub-rising_sun').textContent=ROOMS.rising_sun.sub[lang];
-  document.getElementById('sub-daydream').textContent=ROOMS.daydream.sub[lang];
-  document.getElementById('sub-lucid').textContent=ROOMS.lucid.sub[lang];
-  document.getElementById('lbl-back-guide').textContent=i.back;
-  document.getElementById('lbl-nav-guide').textContent=i.nav_guide;
-  if(currentRoom)renderGuide(currentRoom);
+  const i = I18N[lang];
+
+  document.getElementById('menu-greeting').textContent = i.menu_greeting;
+  document.getElementById('menu-question').textContent = i.menu_question;
+  document.getElementById('btn-guide').textContent     = i.btn_guide;
+  document.getElementById('btn-checkin').textContent   = i.btn_checkin;
+
+  document.getElementById('lbl-back-rooms').textContent  = i.back;
+  document.getElementById('lbl-nav-rooms').textContent   = i.nav_rooms;
+  document.getElementById('lbl-room-section').textContent = i.room_section;
+  document.getElementById('sub-reflections').textContent  = ROOMS.reflections.sub[lang];
+  document.getElementById('sub-rising_sun').textContent   = ROOMS.rising_sun.sub[lang];
+  document.getElementById('sub-daydream').textContent     = ROOMS.daydream.sub[lang];
+  document.getElementById('sub-lucid').textContent        = ROOMS.lucid.sub[lang];
+
+  document.getElementById('lbl-back-guide').textContent = i.back;
+  document.getElementById('lbl-nav-guide').textContent  = i.nav_guide;
+
+  if (currentRoom) renderGuide(currentRoom);
 }
 
+/* ══════════════════════════════════════════
+   ROOM SELECTION
+══════════════════════════════════════════ */
 function selectRoom(roomKey) {
-  currentRoom=roomKey; renderGuide(roomKey); push('s-guide');
+  currentRoom = roomKey;
+  renderGuide(roomKey);
+  push('s-guide');
 }
 
 function renderGuide(roomKey) {
-  const room=ROOMS[roomKey], i=I18N[lang];
-  document.getElementById('g-room-name').textContent=room.name;
-  document.getElementById('g-room-type').textContent=room.sub[lang];
-  const sections=[
-    {label:i.sec_room,items:[
-      {key:'lbl_checkin',dsc:'dsc_checkin',link:LINKS[room.checkin][lang],icon:'🔑'},
-      {key:'lbl_checkout',dsc:'dsc_checkout',link:LINKS[room.checkout][lang],icon:'🧳'},
-      {key:'lbl_roomguide',dsc:'dsc_roomguide',link:LINKS[room.rmGuide][lang],icon:'🏠'},
-    ]},
-    {label:i.sec_common,items:[
-      {key:'lbl_rules',dsc:'dsc_rules',link:LINKS.stay_rules[lang],icon:'📋'},
-      {key:'lbl_story',dsc:'dsc_story',link:LINKS.shiki_story[lang],icon:'✨'},
-      {key:'lbl_travel',dsc:'dsc_travel',link:LINKS.travel_guide[lang],icon:'🗺️'},
-      {key:'lbl_parking',dsc:'dsc_parking',link:LINKS.parking[lang],icon:'🚗'},
-    ]}
+  const room = ROOMS[roomKey];
+  const i    = I18N[lang];
+
+  document.getElementById('g-room-name').textContent = room.name;
+  document.getElementById('g-room-type').textContent = room.sub[lang];
+
+  const sections = [
+    {
+      label: i.sec_room,
+      items: [
+        { key: 'lbl_checkin',   dsc: 'dsc_checkin',   link: LINKS[room.checkin][lang],  icon: '🔑' },
+        { key: 'lbl_checkout',  dsc: 'dsc_checkout',  link: LINKS[room.checkout][lang], icon: '🧳' },
+        { key: 'lbl_roomguide', dsc: 'dsc_roomguide', link: LINKS[room.rmGuide][lang],  icon: '🏠' },
+      ]
+    },
+    {
+      label: i.sec_common,
+      items: [
+        { key: 'lbl_rules',   dsc: 'dsc_rules',   link: LINKS.stay_rules[lang],   icon: '📋' },
+        { key: 'lbl_story',   dsc: 'dsc_story',   link: LINKS.shiki_story[lang],  icon: '✨' },
+        { key: 'lbl_travel',  dsc: 'dsc_travel',  link: LINKS.travel_guide[lang], icon: '🗺️' },
+        { key: 'lbl_parking', dsc: 'dsc_parking', link: LINKS.parking[lang],      icon: '🚗' },
+      ]
+    }
   ];
-  let html='';
-  sections.forEach(sec=>{
-    html+=`<div class="guide-section-label">${sec.label}</div><div class="guide-list">`;
-    sec.items.forEach(item=>{
-      html+=`<a class="guide-card" href="${item.link}" target="_blank" rel="noopener"><div class="guide-icon">${item.icon}</div><div class="guide-text"><div class="guide-name">${i[item.key]}</div><div class="guide-desc">${i[item.dsc]}</div></div><div class="guide-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div></a>`;
+
+  let html = '';
+  sections.forEach(sec => {
+    html += `<div class="guide-section-label">${sec.label}</div><div class="guide-list">`;
+    sec.items.forEach(item => {
+      html += `
+        <a class="guide-card" href="${item.link}" target="_blank" rel="noopener">
+          <div class="guide-icon">${item.icon}</div>
+          <div class="guide-text">
+            <div class="guide-name">${i[item.key]}</div>
+            <div class="guide-desc">${i[item.dsc]}</div>
+          </div>
+          <div class="guide-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+        </a>`;
     });
-    html+='</div>';
+    html += '</div>';
   });
-  document.getElementById('guide-list').innerHTML=html;
+
+  document.getElementById('guide-list').innerHTML = html;
 }
 
-function openCheckin() { window.open(CHECKIN_URL,'_blank'); }
+/* ══════════════════════════════════════════
+   CHECK-IN
+══════════════════════════════════════════ */
+function openCheckin() {
+  window.open(CHECKIN_URL, '_blank');
+}
 
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
 initSlideshow();
 applyI18N();
 </script>
