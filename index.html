@@ -59,10 +59,19 @@
       flex-direction: column;
     }
 
-    /* Hero image — top portion */
-    .splash-image {
-      position: relative;
+    /* Hero image — clip wrapper (keeps flex layout, hides overflow) */
+    .splash-image-clip {
       flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+    /* Hero image — extends 10% above clip so dip reveals image, not bg */
+    .splash-image {
+      position: absolute;
+      top: -10%;
+      left: 0;
+      right: 0;
+      bottom: 0;
       overflow: hidden;
       will-change: transform;
     }
@@ -504,14 +513,16 @@
   <!-- ═══ SCREEN 1: SPLASH ═══════════════════════════════ -->
   <div id="s-splash" class="screen active">
 
-    <div class="splash-image" id="splash-img">
-      <img src="images/main_image.jpg" alt="Shiki">
-      <div class="splash-logo-wrap">
-        <img src="logo/Logo_2.png" alt="Shiki">
-      </div>
-      <div class="splash-image-text">
-        <div class="splash-image-welcome">Welcome to Shiki</div>
-        <div class="splash-image-sub">A place to discover a new lifestyle</div>
+    <div class="splash-image-clip">
+      <div class="splash-image" id="splash-img">
+        <img src="images/main_image.jpg" alt="Shiki">
+        <div class="splash-logo-wrap">
+          <img src="logo/Logo_2.png" alt="Shiki">
+        </div>
+        <div class="splash-image-text">
+          <div class="splash-image-welcome">Welcome to Shiki</div>
+          <div class="splash-image-sub">A place to discover a new lifestyle</div>
+        </div>
       </div>
     </div>
 
@@ -758,7 +769,7 @@ const I18N = {
     lbl_travel:    '旅行ガイド',           dsc_travel:    '由布院のおすすめスポット',
     lbl_story:     'Shiki Story',          dsc_story:     'shikiのブランドストーリー',
     sec_room:      'お部屋のご案内',
-    sec_common:    '共通のご案内',
+    sec_common:    '共通のご案내',
   },
 };
 
