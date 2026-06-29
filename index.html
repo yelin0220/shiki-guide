@@ -40,7 +40,6 @@
 
     /* GLOBAL LANG-BAR */
     .lang-bar { position: absolute; top: calc(var(--safe-top) + 16px); left: 50%; transform: translateX(-50%); display: flex; gap: 4px; z-index: 200; background: #856d47; border-radius: 50px; padding: 4px 6px; }
-    #global-nav-bar .lang-bar { position: static; transform: none; top: auto; left: auto; z-index: auto; }
     #global-nav-bar { display: none; position: absolute; top: 0; left: 0; right: 0; z-index: 100; background: var(--cream); }
     .lang-btn {
       padding: 4px 11px; border-radius: 20px; border: none; background: transparent;
@@ -103,12 +102,12 @@
 
     /* ROOMS */
     #s-rooms { background: #faf2e8; }
-    .nav-bar { position: relative; display: flex; align-items: center; justify-content: space-between; padding: calc(var(--safe-top) + 12px) 20px 12px; flex-shrink: 0; }
+    .nav-bar { position: relative; display: flex; align-items: center; padding: calc(var(--safe-top) + 56px) 20px 14px; flex-shrink: 0; }
     .back-btn { display: flex; align-items: center; gap: 4px; background: none; border: none; color: var(--navy); font-size: 14px; font-weight: 500; cursor: pointer; padding: 6px 8px 6px 2px; -webkit-tap-highlight-color: transparent; opacity: 0.7; }
     .back-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
     .nav-title { display: none; }
-    #s-rooms .scroll-area { padding-top: calc(var(--safe-top) + 70px); }
-    #s-guide .guide-header { padding-top: calc(var(--safe-top) + 70px); }
+    #s-rooms .scroll-area { padding-top: calc(var(--safe-top) + 116px); }
+    #s-guide .guide-header { padding-top: calc(var(--safe-top) + 116px); }
     .scroll-area { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 20px; padding-bottom: calc(var(--safe-bottom) + 24px); }
     .section-room-title { font-size: 22px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin: 20px 0 6px; }
     .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 24px; }
