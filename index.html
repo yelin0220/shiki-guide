@@ -195,7 +195,7 @@
   <!-- SCREEN 3: ROOM LIST -->
   <div id="s-rooms" class="screen">
     <div class="scroll-area">
-      <div class="section-room-title" id="lbl-nav-rooms"></div>
+      <div class="section-room-title" id="lbl-rooms-title"></div>
       <div class="section-room-subtitle" id="lbl-room-section"></div>
       <div class="room-list" id="room-list"></div>
     </div>
@@ -504,6 +504,7 @@ function applyI18N() {
   document.getElementById('btn-guide').textContent=i.btn_guide;
   document.getElementById('btn-checkin').textContent=i.btn_checkin;
   document.getElementById('lbl-nav-rooms').textContent=i.nav_rooms;
+  document.getElementById('lbl-rooms-title').textContent=i.nav_rooms;
   document.getElementById('lbl-room-section').textContent=i.room_section;
   initRooms();
   updateGlobalNav(screenStack[screenStack.length-1]);
