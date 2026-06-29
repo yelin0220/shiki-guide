@@ -109,7 +109,8 @@
     #s-rooms .scroll-area { padding-top: 8px; }
     #s-guide .guide-header { padding-top: 8px; }
     .scroll-area { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 20px; padding-bottom: calc(var(--safe-bottom) + 24px); }
-    .section-room-title { font-size: 22px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin: 20px 0 6px; }
+    .section-room-title { font-size: 22px; font-weight: 700; color: var(--navy); letter-spacing: 0.06em; text-transform: uppercase; margin: 20px 0 4px; }
+    .section-room-subtitle { font-size: 12px; color: var(--muted); margin: 0 0 20px; text-transform: lowercase; letter-spacing: 0.02em; }
     .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 24px; }
     .room-list { display: flex; flex-direction: column; gap: 10px; }
     .room-card { background: #fff; border-radius: 16px; padding: 20px 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 0.1s, background 0.12s; box-shadow: 0 1px 4px rgba(28,45,91,0.06); }
@@ -121,8 +122,8 @@
     /* GUIDE */
     #s-guide { background: #faf2e8; }
     .guide-header { padding: 8px 24px 20px; border-bottom: 1px solid rgba(28,45,91,0.08); flex-shrink: 0; }
-    .guide-room-name { font-size: 22px; font-weight: 300; color: var(--navy); letter-spacing: 0.04em; }
-    .guide-room-type { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .guide-room-name { font-size: 22px; font-weight: 700; color: var(--navy); letter-spacing: 0.06em; text-transform: uppercase; }
+    .guide-room-type { font-size: 12px; color: var(--muted); margin-top: 4px; text-transform: lowercase; }
     .guide-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 20px 0 10px; }
     .guide-list { display: flex; flex-direction: column; gap: 8px; }
     .guide-card { background: #fff; border-radius: 14px; padding: 16px 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; text-decoration: none; -webkit-tap-highlight-color: transparent; transition: transform 0.1s, background 0.12s; box-shadow: 0 1px 3px rgba(28,45,91,0.05); }
@@ -194,6 +195,7 @@
   <div id="s-rooms" class="screen">
     <div class="scroll-area">
       <div class="section-room-title" id="lbl-nav-rooms"></div>
+    <div class="section-room-subtitle" id="lbl-room-hotel"></div>
       <div class="section-label" id="lbl-room-section"></div>
       <div class="room-list" id="room-list"></div>
     </div>
@@ -263,7 +265,7 @@ const YUFUIN_I18N = {
     menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'사전 체크인을\n완료하셨나요?',
     menu_desc:'객실 비밀번호 확인 및 주차 예약은 사전 체크인 완료 후 이용 가능합니다.',
     btn_guide:'게스트 가이드', btn_checkin:'사전 체크인', back:'뒤로',
-    nav_rooms:'객실 선택', nav_guide:'안내', room_section:'이용하실 객실을 선택해 주세요',
+    nav_rooms:'객실 선택', nav_guide:'안내',room_hotel:'SHIKI ART HOTEL YUFU',  room_section:'이용하실 객실을 선택해 주세요',
     lbl_checkin:'체크인 안내', dsc_checkin:'체크인 순서 및 도어록 사용법',
     lbl_checkout:'체크아웃 안내', dsc_checkout:'체크아웃 순서 및 유의사항',
     lbl_roomguide:'룸 가이드', dsc_roomguide:'객실 시설 이용 방법',
@@ -277,7 +279,7 @@ const YUFUIN_I18N = {
     menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'Have you completed your\npre check-in?',
     menu_desc:'Pre check-in is required to receive your room access code and reserve parking.',
     btn_guide:'Guest Guide', btn_checkin:'Pre Check-in', back:'Back',
-    nav_rooms:'Select Room', nav_guide:'Guide', room_section:'Please select your room',
+    nav_rooms:'Select Room', nav_guide:'Guide',room_hotel:'SHIKI ART HOTEL YUFU',  room_section:'Please select your room',
     lbl_checkin:'Check-in Guide', dsc_checkin:'Check-in steps & door lock',
     lbl_checkout:'Check-out Guide', dsc_checkout:'Check-out steps & reminders',
     lbl_roomguide:'Room Guide', dsc_roomguide:'How to use room facilities',
@@ -291,7 +293,7 @@ const YUFUIN_I18N = {
     menu_greeting:'SHIKI ART HOTEL YUFU', menu_question:'事前チェックインは\nお済みですか？',
     menu_desc:'客室パスワードの確認と駐車場のご予約には、事前チェックインが必要です。',
     btn_guide:'ゲストガイド', btn_checkin:'事前チェックイン', back:'戻る',
-    nav_rooms:'お部屋を選択', nav_guide:'ガイド', room_section:'ご利用のお部屋をお選びください',
+    nav_rooms:'お部屋を選択', nav_guide:'ガイド',room_hotel:'SHIKI ART HOTEL YUFU',  room_section:'ご利用のお部屋をお選びください',
     lbl_checkin:'チェックイン案内', dsc_checkin:'チェックイン手順とドアロックの使い方',
     lbl_checkout:'チェックアウト案内', dsc_checkout:'チェックアウト手順とご注意事項',
     lbl_roomguide:'ルームガイド', dsc_roomguide:'客室設備のご利用方法',
@@ -344,7 +346,7 @@ const BEPPU_I18N = {
     menu_greeting:'SHIKI VILLA BEPPU', menu_question:'사전 체크인을\n완료하셨나요?',
     menu_desc:'객실 비밀번호 확인 및 주차 예약은 사전 체크인 완료 후 이용 가능합니다.',
     btn_guide:'게스트 가이드', btn_checkin:'사전 체크인', back:'뒤로',
-    nav_rooms:'객실 선택', nav_guide:'안내', room_section:'이용하실 객실을 선택해 주세요',
+    nav_rooms:'객실 선택', nav_guide:'안내',room_hotel:'SHIKI VILLA BEPPU',  room_section:'이용하실 객실을 선택해 주세요',
     lbl_checkin:'체크인 안내', dsc_checkin:'체크인 순서 및 도어록 사용법',
     lbl_checkout:'체크아웃 안내', dsc_checkout:'체크아웃 순서 및 유의사항',
     lbl_roomguide:'룸 가이드', dsc_roomguide:'객실 시설 이용 방법',
@@ -360,7 +362,7 @@ const BEPPU_I18N = {
     menu_greeting:'SHIKI VILLA BEPPU', menu_question:'Have you completed your\npre check-in?',
     menu_desc:'Pre check-in is required to receive your room access code and reserve parking.',
     btn_guide:'Guest Guide', btn_checkin:'Pre Check-in', back:'Back',
-    nav_rooms:'Select Room', nav_guide:'Guide', room_section:'Please select your room',
+    nav_rooms:'Select Room', nav_guide:'Guide',room_hotel:'SHIKI VILLA BEPPU',  room_section:'Please select your room',
     lbl_checkin:'Check-in Guide', dsc_checkin:'Check-in steps & door lock',
     lbl_checkout:'Check-out Guide', dsc_checkout:'Check-out steps & reminders',
     lbl_roomguide:'Room Guide', dsc_roomguide:'How to use room facilities',
@@ -376,7 +378,7 @@ const BEPPU_I18N = {
     menu_greeting:'SHIKI VILLA BEPPU', menu_question:'事前チェックインは\nお済みですか？',
     menu_desc:'客室パスワードの確認と駐車場のご予約には、事前チェックインが必要です。',
     btn_guide:'ゲストガイド', btn_checkin:'事前チェックイン', back:'戻る',
-    nav_rooms:'お部屋を選択', nav_guide:'ガイド', room_section:'ご利用のお部屋をお選びください',
+    nav_rooms:'お部屋を選択', nav_guide:'ガイド',room_hotel:'SHIKI VILLA BEPPU',  room_section:'ご利用のお部屋をお選びください',
     lbl_checkin:'チェックイン案内', dsc_checkin:'チェックイン手順とドアロックの使い方',
     lbl_checkout:'チェックアウト案内', dsc_checkout:'チェックアウト手順とご注意事項',
     lbl_roomguide:'ルームガイド', dsc_roomguide:'客室設備のご利用方法',
@@ -499,6 +501,7 @@ function applyI18N() {
   document.getElementById('btn-guide').textContent=i.btn_guide;
   document.getElementById('btn-checkin').textContent=i.btn_checkin;
   document.getElementById('lbl-nav-rooms').textContent=i.nav_rooms;
+  document.getElementById('lbl-room-hotel').textContent=i.room_hotel;
   document.getElementById('lbl-room-section').textContent=i.room_section;
   initRooms();
   updateGlobalNav(screenStack[screenStack.length-1]);
