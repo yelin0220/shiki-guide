@@ -158,7 +158,7 @@
   <div id="s-splash" class="screen active">
     <div class="splash-image-clip">
       <div class="splash-image" id="splash-img">
-        <img id="splash-img-el" src="images/main_image.jpg" alt="Shiki">
+        <img id="splash-img-el" src="" alt="Shiki">
         <div class="splash-logo-wrap">
           <img src="logo/Logo_2.png" alt="Shiki">
         </div>
@@ -216,6 +216,8 @@
 
 <script>
   (function(){function setVH(){document.documentElement.style.setProperty('--vh',window.innerHeight+'px');}setVH();window.addEventListener('resize',setVH);})();
+  // Set splash image src before main JS runs
+  (function(){var b=new URLSearchParams(location.search).get('branch');var el=document.getElementById('splash-img-el');if(el)el.src=b==='beppu'?'images/beppu/main_image.jpg':'images/main_image.jpg';})();
 // =========================================================
 // BRANCH DETECTION
 // =========================================================
