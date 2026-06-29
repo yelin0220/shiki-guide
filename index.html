@@ -122,8 +122,8 @@
     /* GUIDE */
     #s-guide { background: #faf2e8; }
     .guide-header { padding: 8px 24px 20px; border-bottom: 1px solid rgba(28,45,91,0.08); flex-shrink: 0; }
-    .guide-room-name { font-size: 22px; font-weight: 700; color: var(--navy); letter-spacing: 0.06em; text-transform: uppercase; }
-    .guide-room-type { font-size: 12px; color: var(--muted); margin-top: 4px; text-transform: lowercase; }
+    .guide-room-name { font-size: 22px; font-weight: 700; color: var(--navy); letter-spacing: 0.04em; }
+    .guide-room-type { font-size: 12px; color: var(--muted); margin-top: 4px; }
     .guide-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 20px 0 10px; }
     .guide-list { display: flex; flex-direction: column; gap: 8px; }
     .guide-card { background: #fff; border-radius: 14px; padding: 16px 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; text-decoration: none; -webkit-tap-highlight-color: transparent; transition: transform 0.1s, background 0.12s; box-shadow: 0 1px 3px rgba(28,45,91,0.05); }
@@ -195,7 +195,6 @@
   <div id="s-rooms" class="screen">
     <div class="scroll-area">
       <div class="section-room-title" id="lbl-nav-rooms"></div>
-    <div class="section-room-subtitle" id="lbl-room-hotel"></div>
       <div class="section-label" id="lbl-room-section"></div>
       <div class="room-list" id="room-list"></div>
     </div>
@@ -501,7 +500,6 @@ function applyI18N() {
   document.getElementById('btn-guide').textContent=i.btn_guide;
   document.getElementById('btn-checkin').textContent=i.btn_checkin;
   document.getElementById('lbl-nav-rooms').textContent=i.nav_rooms;
-  document.getElementById('lbl-room-hotel').textContent=i.room_hotel;
   document.getElementById('lbl-room-section').textContent=i.room_section;
   initRooms();
   updateGlobalNav(screenStack[screenStack.length-1]);
