@@ -39,7 +39,8 @@
     #app { width: 100%; height: 100%; position: relative; overflow: hidden; }
 
     /* GLOBAL LANG-BAR */
-    .lang-bar { display: flex; gap: 4px; background: #856d47; border-radius: 50px; padding: 4px 6px; }
+    .lang-bar { position: absolute; top: calc(var(--safe-top) + 16px); left: 50%; transform: translateX(-50%); display: flex; gap: 4px; z-index: 200; background: #856d47; border-radius: 50px; padding: 4px 6px; }
+    #global-nav-bar .lang-bar { position: static; transform: none; top: auto; left: auto; z-index: auto; }
     #global-nav-bar { display: none; position: absolute; top: 0; left: 0; right: 0; z-index: 100; background: var(--cream); }
     .lang-btn {
       padding: 4px 11px; border-radius: 20px; border: none; background: transparent;
@@ -173,7 +174,12 @@
 
   <!-- SCREEN 2: MENU -->
   <div id="s-menu" class="screen">
-    <div class="slideshow" id="slideshow">
+    <div class="lang-bar">
+      <button class="lang-btn on" onclick="setLang('en')">EN</button>
+      <button class="lang-btn"    onclick="setLang('ja')">JP</button>
+      <button class="lang-btn"    onclick="setLang('ko')">KR</button>
+    </div>
+        <div class="slideshow" id="slideshow">
       <div class="slide-dots" id="slide-dots"></div>
     </div>
     <div class="menu-body">
