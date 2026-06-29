@@ -503,7 +503,7 @@ function applyI18N() {
   document.getElementById('menu-desc').textContent=i.menu_desc;
   document.getElementById('btn-guide').textContent=i.btn_guide;
   document.getElementById('btn-checkin').textContent=i.btn_checkin;
-  document.getElementById('lbl-nav-rooms').textContent=i.nav_rooms;
+  const _nr=document.getElementById('lbl-nav-rooms'); if(_nr) _nr.textContent=i.nav_rooms;
   document.getElementById('lbl-rooms-title').textContent=i.nav_rooms;
   document.getElementById('lbl-room-section').textContent=i.room_section;
   initRooms();
