@@ -36,6 +36,7 @@
       background: #856d47; border-radius: 50px; padding: 4px 6px;
     }
     #global-lang-bar { display: none; }
+    #global-nav-bar { display: none; position: absolute; top: 0; left: 0; right: 0; z-index: 100; background: var(--cream); }
     .lang-btn {
       padding: 4px 11px; border-radius: 20px; border: none; background: transparent;
       color: rgba(255,255,255,0.7); font-size: 11px; font-weight: 700;
@@ -137,11 +138,22 @@
     <button class="lang-btn"    onclick="setLang('ko')">KR</button>
   </div>
 
+  <!-- GLOBAL NAV-BAR -->
+  <div id="global-nav-bar">
+    <div class="nav-bar">
+      <button class="back-btn" onclick="pop()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <span id="lbl-back-global"></span>
+      </button>
+      <div class="nav-title" id="lbl-nav-global"></div>
+    </div>
+  </div>
+
   <!-- SCREEN 1: SPLASH -->
   <div id="s-splash" class="screen active">
     <div class="splash-image-clip">
       <div class="splash-image" id="splash-img">
-        <img id="splash-img-el" src="" alt="Shiki">
+        <img id="splash-img-el" src="images/main_image.jpg" alt="Shiki">
         <div class="splash-logo-wrap">
           <img src="logo/Logo_2.png" alt="Shiki">
         </div>
@@ -172,12 +184,6 @@
 
   <!-- SCREEN 3: ROOM LIST -->
   <div id="s-rooms" class="screen">
-    <div class="nav-bar">
-      <button class="back-btn" onclick="pop()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        <span id="lbl-back-rooms"></span>
-      </button>
-    </div>
     <div class="scroll-area">
       <div class="section-room-title" id="lbl-nav-rooms"></div>
       <div class="section-label" id="lbl-room-section"></div>
@@ -187,13 +193,6 @@
 
   <!-- SCREEN 4: GUIDE LINKS -->
   <div id="s-guide" class="screen">
-    <div class="nav-bar">
-      <button class="back-btn" onclick="pop()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        <span id="lbl-back-guide"></span>
-      </button>
-      <div class="nav-title" id="lbl-nav-guide"></div>
-    </div>
     <div class="guide-header">
       <div class="guide-room-name" id="g-room-name"></div>
       <div class="guide-room-type" id="g-room-type"></div>
@@ -409,6 +408,7 @@ document.getElementById('splash-img-el').src = SPLASH_IMAGE;
 function push(id) {
   const prev=screenStack[screenStack.length-1], prevEl=document.getElementById(prev), nextEl=document.getElementById(id);
   prevEl.classList.add('exit-left'); nextEl.classList.add('active'); screenStack.push(id);
+  updateGlobalNav(id);
   setTimeout(() => prevEl.classList.remove('exit-left'), 420);
 }
 
@@ -417,6 +417,7 @@ function pop() {
   const curr=screenStack.pop(), prev=screenStack[screenStack.length-1];
   document.getElementById(curr).classList.remove('active');
   document.getElementById(prev).classList.remove('exit-left');
+  updateGlobalNav(prev);
 }
 
 function startExperience() {
@@ -425,7 +426,7 @@ function startExperience() {
   menu.classList.add('active'); screenStack=['s-menu'];
   splash.classList.add('exiting');
   setTimeout(() => { document.getElementById('global-lang-bar').style.display='flex'; menu.style.transition='opacity 0.42s ease-out'; menu.style.opacity='1'; }, 260);
-  setTimeout(() => { splash.classList.remove('active','exiting'); menu.style.transition=''; menu.style.opacity=''; startSlideshow(); }, 720);
+  setTimeout(() => { splash.classList.remove('active','exiting'); menu.style.transition=''; menu.style.opacity=''; menu.style.transform=''; startSlideshow(); }, 720);
 }
 
 // =========================================================
@@ -465,6 +466,21 @@ function setLang(l) {
   applyI18N();
 }
 
+function updateGlobalNav(screenId) {
+  const gnav=document.getElementById('global-nav-bar');
+  if (!gnav) return;
+  const glbl=document.getElementById('lbl-back-global');
+  const gnvt=document.getElementById('lbl-nav-global');
+  const i=I18N[lang];
+  if (screenId==='s-rooms') {
+    gnav.style.display='block'; if(glbl)glbl.textContent=i.back; if(gnvt)gnvt.textContent=i.nav_rooms;
+  } else if (screenId==='s-guide') {
+    gnav.style.display='block'; if(glbl)glbl.textContent=i.back; if(gnvt)gnvt.textContent=i.nav_guide;
+  } else {
+    gnav.style.display='none';
+  }
+}
+
 function applyI18N() {
   const i=I18N[lang];
   document.getElementById('menu-greeting').textContent=i.menu_greeting;
@@ -472,12 +488,10 @@ function applyI18N() {
   document.getElementById('menu-desc').textContent=i.menu_desc;
   document.getElementById('btn-guide').textContent=i.btn_guide;
   document.getElementById('btn-checkin').textContent=i.btn_checkin;
-  document.getElementById('lbl-back-rooms').textContent=i.back;
   document.getElementById('lbl-nav-rooms').textContent=i.nav_rooms;
   document.getElementById('lbl-room-section').textContent=i.room_section;
-  document.getElementById('lbl-back-guide').textContent=i.back;
-  document.getElementById('lbl-nav-guide').textContent=i.nav_guide;
   initRooms();
+  updateGlobalNav(screenStack[screenStack.length-1]);
   if (currentRoom) renderGuide(currentRoom);
 }
 
