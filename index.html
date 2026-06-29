@@ -39,12 +39,7 @@
     #app { width: 100%; height: 100%; position: relative; overflow: hidden; }
 
     /* GLOBAL LANG-BAR */
-    .lang-bar {
-      position: absolute; top: calc(var(--safe-top) + 16px); left: 50%;
-      transform: translateX(-50%); display: flex; gap: 4px; z-index: 200;
-      background: #856d47; border-radius: 50px; padding: 4px 6px;
-    }
-    #global-lang-bar { display: none; }
+    .lang-bar { display: flex; gap: 4px; background: #856d47; border-radius: 50px; padding: 4px 6px; }
     #global-nav-bar { display: none; position: absolute; top: 0; left: 0; right: 0; z-index: 100; background: var(--cream); }
     .lang-btn {
       padding: 4px 11px; border-radius: 20px; border: none; background: transparent;
@@ -107,10 +102,12 @@
 
     /* ROOMS */
     #s-rooms { background: #faf2e8; }
-    .nav-bar { position: relative; display: flex; align-items: center; justify-content: center; padding: calc(var(--safe-top) + 56px) 20px 14px; flex-shrink: 0; }
-    .back-btn { position: absolute; top: calc(var(--safe-top) + 14px); left: 16px; display: flex; align-items: center; gap: 4px; background: none; border: none; color: var(--navy); font-size: 14px; font-weight: 500; cursor: pointer; padding: 6px 8px 6px 2px; -webkit-tap-highlight-color: transparent; opacity: 0.7; }
+    .nav-bar { position: relative; display: flex; align-items: center; justify-content: space-between; padding: calc(var(--safe-top) + 12px) 20px 12px; flex-shrink: 0; }
+    .back-btn { display: flex; align-items: center; gap: 4px; background: none; border: none; color: var(--navy); font-size: 14px; font-weight: 500; cursor: pointer; padding: 6px 8px 6px 2px; -webkit-tap-highlight-color: transparent; opacity: 0.7; }
     .back-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
-    .nav-title { font-size: 16px; font-weight: 600; color: var(--navy); letter-spacing: 0.02em; text-align: center; }
+    .nav-title { display: none; }
+    #s-rooms .scroll-area { padding-top: calc(var(--safe-top) + 70px); }
+    #s-guide .guide-header { padding-top: calc(var(--safe-top) + 70px); }
     .scroll-area { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 20px; padding-bottom: calc(var(--safe-bottom) + 24px); }
     .section-room-title { font-size: 22px; font-weight: 600; color: var(--navy); letter-spacing: 0.01em; margin: 20px 0 6px; }
     .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 24px; }
@@ -140,13 +137,6 @@
 <body>
 <div id="app">
 
-  <!-- GLOBAL LANG-BAR -->
-  <div class="lang-bar" id="global-lang-bar">
-    <button class="lang-btn on" onclick="setLang('en')">EN</button>
-    <button class="lang-btn"    onclick="setLang('ja')">JP</button>
-    <button class="lang-btn"    onclick="setLang('ko')">KR</button>
-  </div>
-
   <!-- GLOBAL NAV-BAR -->
   <div id="global-nav-bar">
     <div class="nav-bar">
@@ -154,7 +144,11 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         <span id="lbl-back-global"></span>
       </button>
-      <div class="nav-title" id="lbl-nav-global"></div>
+      <div class="lang-bar" id="global-lang-bar">
+        <button class="lang-btn on" onclick="setLang('en')">EN</button>
+        <button class="lang-btn"    onclick="setLang('ja')">JP</button>
+        <button class="lang-btn"    onclick="setLang('ko')">KR</button>
+      </div>
     </div>
   </div>
 
@@ -537,9 +531,9 @@ function getGuideSections(roomKey) {
     return [
       sec_room,
       { label:i.sec_stay, items:[
-        { key:'lbl_bbq',        dsc:'dsc_bbq',        link:LINKS.bbq[lang],          icon:'🔥' },
+        { key:'lbl_bbq',        dsc:'dsc_bbq',        link:LINKS.bbq[lang],          icon:"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#1c2d5b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M4 11a8 8 0 0016 0'/><line x1='4' y1='11' x2='20' y2='11'/><line x1='9' y1='19' x2='8' y2='22'/><line x1='15' y1='19' x2='16' y2='22'/><line x1='12' y1='19' x2='12' y2='22'/></svg>" },
         { key:'lbl_parking1',   dsc:'dsc_parking1',   link:LINKS.parking1[lang],     icon:"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#1c2d5b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='3'/><path d='M9 17V7h4.5a3 3 0 010 6H9'/></svg>" },
-        { key:'lbl_parking515', dsc:'dsc_parking515', link:LINKS.parking515[lang],   icon:'🅿️' },
+        { key:'lbl_parking515', dsc:'dsc_parking515', link:LINKS.parking515[lang],   icon:"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#1c2d5b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='3'/><path d='M9 17V7h4.5a3 3 0 010 6H9'/></svg>" },
         { key:'lbl_rules',      dsc:'dsc_rules',      link:LINKS.stay_rules[lang],   icon:"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#1c2d5b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='4.5' cy='7' r='1.2' fill='#1c2d5b' stroke='none'/><circle cx='4.5' cy='12' r='1.2' fill='#1c2d5b' stroke='none'/><circle cx='4.5' cy='17' r='1.2' fill='#1c2d5b' stroke='none'/><line x1='9' y1='7' x2='20' y2='7'/><line x1='9' y1='12' x2='20' y2='12'/><line x1='9' y1='17' x2='20' y2='17'/></svg>" },
       ]},
       { label:i.sec_common, items:[
